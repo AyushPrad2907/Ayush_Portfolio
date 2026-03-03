@@ -326,8 +326,9 @@ section{position:relative;z-index:1}
 /* ═══ TESTIMONIALS ══════════════════════════ */
 #testimonials{padding:7rem 0}
 .testi-wrapper{position:relative}
-.testi-carousel{display:grid;grid-template-columns:1fr;overflow:hidden;position:relative;height:320px}
+.testi-carousel{display:grid;grid-template-columns:1fr;overflow:hidden;position:relative;height:420px}
 .testi-card{position:absolute;inset:0;opacity:0;transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);transform:translateX(40px);pointer-events:none;padding:2.4rem;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,.03) 100%);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.testi-card.testi-card--compact{padding:1.6rem 2rem;max-width:520px;margin:0 auto;justify-content:center}
 [data-theme="dark"] .testi-card{background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.01) 100%);box-shadow:0 8px 32px rgba(255,255,255,.02)}
 .testi-card.active{opacity:1;transform:translateX(0);pointer-events:auto}
 .testi-card.exit-left{transform:translateX(-40px)}
@@ -421,6 +422,7 @@ footer{background:var(--ink);color:rgba(240,235,224,.25);border-top:1px solid rg
   .about-sidebar{border-right:none;border-bottom:1px solid var(--line);padding:0 0 2rem;flex-direction:row;flex-wrap:wrap;gap:1.5rem}
   .about-main{padding:0}
   .tech-grid{grid-template-columns:repeat(4,1fr)}
+  .testi-carousel{height:480px}
   .contact-layout{grid-template-columns:1fr;gap:3rem}
   .edu-row{grid-template-columns:1fr;gap:.4rem}
   .edu-badge{text-align:left}
@@ -431,6 +433,7 @@ footer{background:var(--ink);color:rgba(240,235,224,.25);border-top:1px solid rg
 @media(max-width:600px){
   .container{padding:0 1.5rem}
   .tech-grid{grid-template-columns:repeat(3,1fr)}
+  .testi-carousel{height:520px}
   .nav-center{display:none}
   footer{flex-direction:column;gap:.5rem;text-align:center}
 }
@@ -900,6 +903,41 @@ footer{background:var(--ink);color:rgba(240,235,224,.25);border-top:1px solid rg
           </div>
         </div>
       </div>
+
+      <!-- Friend -->
+        <div class="testi-card testi-card--compact">
+          <div class="testi-quote">
+            <svg viewBox="0 0 24 24" class="quote-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z" fill="currentColor"/></svg>
+            <p>"Met many code rats but Ayush(my schoolmate) is an exceptional coder who consistently delivers clean, high-performance solutions to the most complex technical challenges."</p>
+          </div>
+          <div class="testi-meta">
+            <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">EA</div>
+            <div>
+              <div class="testi-name">Eklavya Amrit</div>
+              <div class="testi-title">Friend | DAV Public School Bistupur Jamshedpur | BIT Mesra</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Computer teacher -->
+        <div class="testi-card">
+          <div class="testi-quote">
+            <svg viewBox="0 0 24 24" class="quote-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z" fill="currentColor"/></svg>
+            <p>"It gives me immense pleasure to write this testimonial for Ayush Pradhan, who successfully passed out in the year 2025 with an outstanding score of 91 in Computer Science.
+Ayush has always been a sincere, hardworking, and enthusiastic learner. He demonstrated strong analytical thinking, excellent problem-solving skills, and a deep interest in technology throughout his academic journey. His dedication to learning and consistent performance made him stand out among his peers.
+Currently, Ayush is working as a Google Developer Group (GDG) Member in Bhubaneswar, which truly reflects his passion for development, innovation, and continuous learning. His involvement with GDG showcases his commitment to enhancing his technical skills and contributing to the developer community.
+I strongly believe that Ayush has a bright future ahead, and I wish him great success in all his future endeavors. He will surely prove to be an asset to any organization or team he becomes part of.
+Best wishes"</p>
+          </div>
+          <div class="testi-meta">
+            <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">TP</div>
+            <div>
+              <div class="testi-name">Tanmoy Paul</div>
+              <div class="testi-title">PGT Computer Science |DAV Public School Bistupur Jamshedpur</div>
+            </div>
+          </div>
+        </div>
+
       <div class="testi-nav">
         <button class="testi-dot active" data-slide="0"></button>
         <button class="testi-dot" data-slide="1"></button>
@@ -908,6 +946,8 @@ footer{background:var(--ink);color:rgba(240,235,224,.25);border-top:1px solid rg
         <button class="testi-dot" data-slide="4"></button>
         <button class="testi-dot" data-slide="5"></button>
         <button class="testi-dot" data-slide="6"></button>
+        <button class="testi-dot" data-slide="7"></button>
+        <button class="testi-dot" data-slide="8"></button>
       </div>
     </div>
   </div>
