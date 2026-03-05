@@ -99,41 +99,94 @@
     }
 
     /* ═══ CURSOR ═══════════════════════════════ */
-    #cur-dot {
+    #cursor-spotlight {
       position: fixed;
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
+      inset: 0;
+      z-index: 9997;
       pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform .15s, background .3s;
-      will-change: left, top
+      background: radial-gradient(circle 220px at var(--cx, -100px) var(--cy, -100px),
+          rgba(224, 112, 72, .07) 0%,
+          rgba(224, 112, 72, .03) 40%,
+          transparent 70%);
+      transition: opacity .4s
     }
 
-    #cur-ring {
+    [data-theme="dark"] #cursor-spotlight {
+      background: radial-gradient(circle 280px at var(--cx, -100px) var(--cy, -100px),
+          rgba(224, 112, 72, .1) 0%,
+          rgba(224, 112, 72, .04) 35%,
+          transparent 65%)
+    }
+
+    .cur-hover #cursor-spotlight {
+      background: radial-gradient(circle 320px at var(--cx, -100px) var(--cy, -100px),
+          rgba(224, 112, 72, .12) 0%,
+          rgba(224, 112, 72, .05) 35%,
+          transparent 60%)
+    }
+
+    #cursor-gem {
       position: fixed;
-      width: 36px;
-      height: 36px;
-      border: 1.5px solid var(--accent);
+      width: 10px;
+      height: 10px;
+      z-index: 9999;
+      pointer-events: none;
+      transform: translate(-50%, -50%) rotate(45deg);
+      will-change: left, top, transform;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: .9;
+      box-shadow: 0 0 6px rgba(224, 112, 72, .4);
+      transition:
+        width .4s cubic-bezier(.34, 1.56, .64, 1),
+        height .4s cubic-bezier(.34, 1.56, .64, 1),
+        border-radius .4s cubic-bezier(.34, 1.56, .64, 1),
+        transform .4s cubic-bezier(.34, 1.56, .64, 1),
+        opacity .3s,
+        box-shadow .4s,
+        background .3s
+    }
+
+    /* Hover: diamond morphs into a soft glowing circle */
+    .cur-hover #cursor-gem {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      background: transparent;
+      border: 1.5px solid var(--accent);
+      opacity: .5;
+      box-shadow:
+        0 0 16px rgba(224, 112, 72, .3),
+        inset 0 0 12px rgba(224, 112, 72, .08)
+    }
+
+    /* Click ripple */
+    .cursor-ripple {
+      position: fixed;
       pointer-events: none;
       z-index: 9998;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
       transform: translate(-50%, -50%);
-      transition: width .3s, height .3s, opacity .3s, border-color .3s;
-      opacity: .45;
-      will-change: left, top
+      animation: cursorRippleOut .5s cubic-bezier(.4, 0, .2, 1) forwards;
+      opacity: 0
     }
 
-    .cur-big #cur-dot {
-      transform: translate(-50%, -50%) scale(2.5)
-    }
+    @keyframes cursorRippleOut {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: .6
+      }
 
-    .cur-big #cur-ring {
-      width: 52px;
-      height: 52px;
-      opacity: .18
+      100% {
+        width: 50px;
+        height: 50px;
+        opacity: 0
+      }
     }
 
     /* ═══ NAV ══════════════════════════════════ */
@@ -2566,6 +2619,174 @@
         text-align: center
       }
     }
+
+    /* ═══ CERTIFICATIONS ═══════════════════════ */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem
+    }
+
+    .cert-card {
+      position: relative;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.8rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      transition: transform .35s cubic-bezier(.4, 0, .2, 1),
+        box-shadow .35s cubic-bezier(.4, 0, .2, 1),
+        border-color .35s;
+      overflow: hidden;
+      cursor: default
+    }
+
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg,
+          rgba(240, 144, 106, .04) 0%,
+          transparent 60%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .35s
+    }
+
+    .cert-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(224, 112, 72, .1),
+        0 4px 12px rgba(0, 0, 0, .06);
+      border-color: var(--accent)
+    }
+
+    .cert-card:hover::before {
+      opacity: 1
+    }
+
+    .cert-issuer-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--bg3);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color .3s, background .3s
+    }
+
+    .cert-card:hover .cert-issuer-icon {
+      border-color: var(--accent);
+      background: rgba(240, 144, 106, .08)
+    }
+
+    .cert-issuer-icon svg {
+      width: 28px;
+      height: 28px
+    }
+
+    .cert-info {
+      flex: 1;
+      min-width: 0
+    }
+
+    .cert-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: .35rem;
+      transition: color .3s
+    }
+
+    .cert-issuer {
+      font-size: .78rem;
+      color: var(--mid);
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem
+    }
+
+    .cert-issuer-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--mid);
+      opacity: .5
+    }
+
+    .cert-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .2rem .65rem;
+      font-family: 'Fira Code', monospace;
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-radius: 20px;
+      background: rgba(240, 144, 106, .1);
+      color: var(--accent);
+      border: 1px solid rgba(240, 144, 106, .2);
+      transition: background .3s, border-color .3s
+    }
+
+    .cert-type-badge.badge-sim {
+      background: rgba(99, 102, 241, .1);
+      color: #6366f1;
+      border-color: rgba(99, 102, 241, .2)
+    }
+
+    [data-theme="dark"] .cert-card {
+      background: rgba(255, 255, 255, .03);
+      border-color: rgba(255, 255, 255, .06)
+    }
+
+    [data-theme="dark"] .cert-card:hover {
+      box-shadow: 0 16px 48px rgba(224, 112, 72, .12),
+        0 4px 12px rgba(0, 0, 0, .3);
+      border-color: var(--accent)
+    }
+
+    [data-theme="dark"] .cert-issuer-icon {
+      background: rgba(255, 255, 255, .05);
+      border-color: rgba(255, 255, 255, .08)
+    }
+
+    [data-theme="dark"] .cert-card:hover .cert-issuer-icon {
+      background: rgba(240, 144, 106, .1);
+      border-color: rgba(240, 144, 106, .3)
+    }
+
+    @keyframes certShimmer {
+      0% {
+        background-position: -200% center
+      }
+
+      100% {
+        background-position: 200% center
+      }
+    }
+
+    .cert-card.revealed .cert-type-badge {
+      background-size: 200% 100%;
+      animation: certShimmer 3s ease-in-out 1
+    }
+
+    @media(max-width:768px) {
+      .cert-grid {
+        grid-template-columns: 1fr
+      }
+    }
   </style>
 </head>
 
@@ -2594,8 +2815,8 @@
   </div>
 
   <canvas id="star-canvas"></canvas>
-  <div id="cur-dot"></div>
-  <div id="cur-ring"></div>
+  <div id="cursor-spotlight"></div>
+  <div id="cursor-gem"></div>
 
 
 
@@ -2608,6 +2829,7 @@
       <li><a href="#projects">Work</a></li>
       <li><a href="#achievements">Awards</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#certifications">Certs</a></li>
       <li><a href="#testimonials">Testimonials</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -3425,11 +3647,139 @@
       </div>
     </div>
   </section>
+  <div class="rule"></div>
+
+  <!-- ═══ CERTIFICATIONS ═══════════════════════════════ -->
+  <section id="certifications">
+    <div class="container">
+      <div class="eyebrow" data-reveal="fade">06 — Credentials</div>
+      <h2 class="section-heading" data-reveal="up">Certifications &amp; <em>Badges</em></h2>
+      <div class="cert-grid">
+
+        <!-- 1. Microsoft Azure App Services -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.05s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
+              <rect width="11" height="11" fill="#F25022" />
+              <rect x="12" width="11" height="11" fill="#7FBA00" />
+              <rect y="12" width="11" height="11" fill="#00A4EF" />
+              <rect x="12" y="12" width="11" height="11" fill="#FFB900" />
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Azure App Services</div>
+            <div class="cert-issuer">Microsoft<span class="cert-issuer-dot"></span>Cloud</div>
+            <span class="cert-type-badge">Certified</span>
+          </div>
+        </div>
+
+        <!-- 2. Oracle Cloud Infrastructure 2025 AI Foundations -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.1s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10.7 6h10.6C26.6 6 31 10.5 31 16s-4.4 10-9.7 10H10.7C5.4 26 1 21.5 1 16S5.4 6 10.7 6zm10.4 16c3.5 0 6.3-2.7 6.3-6s-2.8-6-6.3-6H10.9C7.4 10 4.6 12.7 4.6 16s2.8 6 6.3 6h10.2z"
+                fill="#C74634" />
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">OCI 2025 Certified AI Foundations Associate</div>
+            <div class="cert-issuer">Oracle<span class="cert-issuer-dot"></span>2025</div>
+            <span class="cert-type-badge">Certified</span>
+          </div>
+        </div>
+
+        <!-- 3. Microsoft Intro to Generative AI and Agents -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.15s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
+              <rect width="11" height="11" fill="#F25022" />
+              <rect x="12" width="11" height="11" fill="#7FBA00" />
+              <rect y="12" width="11" height="11" fill="#00A4EF" />
+              <rect x="12" y="12" width="11" height="11" fill="#FFB900" />
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Introduction to Generative AI and Agents</div>
+            <div class="cert-issuer">Microsoft<span class="cert-issuer-dot"></span>AI</div>
+            <span class="cert-type-badge">Badge</span>
+          </div>
+        </div>
+
+        <!-- 4. Microsoft Intro to AI Concepts -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.2s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
+              <rect width="11" height="11" fill="#F25022" />
+              <rect x="12" width="11" height="11" fill="#7FBA00" />
+              <rect y="12" width="11" height="11" fill="#00A4EF" />
+              <rect x="12" y="12" width="11" height="11" fill="#FFB900" />
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Introduction to AI Concepts</div>
+            <div class="cert-issuer">Microsoft<span class="cert-issuer-dot"></span>AI</div>
+            <span class="cert-type-badge">Badge</span>
+          </div>
+        </div>
+
+        <!-- 5. Deloitte Australia Technology Job Simulation -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.25s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+              <text x="4" y="28" font-family="Arial, sans-serif" font-weight="bold" font-size="26" fill="#000"
+                letter-spacing="1">Deloitte</text>
+              <circle cx="172" cy="28" r="5" fill="#86BC25" />
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Technology Job Simulation</div>
+            <div class="cert-issuer">Deloitte Australia<span class="cert-issuer-dot"></span>Forage</div>
+            <span class="cert-type-badge badge-sim">Simulation</span>
+          </div>
+        </div>
+
+        <!-- 6. HP Life Data Science & Analytics -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.3s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="30" fill="#0096D6" />
+              <text x="32" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="30"
+                fill="#fff">hp</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Data Science &amp; Analytics</div>
+            <div class="cert-issuer">HP Life<span class="cert-issuer-dot"></span>Data</div>
+            <span class="cert-type-badge">Badge</span>
+          </div>
+        </div>
+
+        <!-- 7. HP Life AI for Beginners -->
+        <div class="cert-card" data-reveal="up" style="transition-delay:.35s">
+          <div class="cert-issuer-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="30" fill="#0096D6" />
+              <text x="32" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="30"
+                fill="#fff">hp</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">AI for Beginners</div>
+            <div class="cert-issuer">HP Life<span class="cert-issuer-dot"></span>AI</div>
+            <span class="cert-type-badge">Badge</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <div class="rule"></div>
 
   <!-- ═══ TESTIMONIALS ═════════════════════════════════ -->
   <section id="testimonials">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">06 — Recognition</div>
+      <div class="eyebrow" data-reveal="fade">07 — Recognition</div>
       <h2 class="section-heading" data-reveal="up">What <em>people say</em></h2>
       <div class="testi-wrapper" data-reveal="up" style="margin-top:3rem">
         <div class="testi-carousel">
@@ -3645,7 +3995,7 @@
   <!-- ═══ CONTACT ═══════════════════════════════════════ -->
   <section id="contact">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">07 — Get In Touch</div>
+      <div class="eyebrow" data-reveal="fade">08 — Get In Touch</div>
       <h2 class="section-heading" data-reveal="up">Let's build <em>something.</em></h2>
       <div class="contact-layout">
         <div data-reveal="left">
@@ -3828,22 +4178,59 @@
     });
 
     /* ═══ CURSOR ════════════════════════════════════════ */
-    const dot = document.getElementById('cur-dot');
-    const ring = document.getElementById('cur-ring');
-    let rx = 0, ry = 0, mx = 0, my = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-    });
-    (function lerp() {
-      rx += (mx - rx) * .13; ry += (my - ry) * .13;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(lerp);
+    (function initCursor() {
+      const gem = document.getElementById('cursor-gem');
+      const spotlight = document.getElementById('cursor-spotlight');
+      let isTouch = 'ontouchstart' in window;
+      if (isTouch) {
+        gem.style.display = spotlight.style.display = 'none';
+        document.body.style.cursor = 'auto';
+        return;
+      }
+
+      let mx = -100, my = -100, sx = -100, sy = -100;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        gem.style.left = mx + 'px';
+        gem.style.top = my + 'px';
+      });
+
+      // Smooth lerp for spotlight
+      (function tick() {
+        sx += (mx - sx) * 0.12;
+        sy += (my - sy) * 0.12;
+        spotlight.style.setProperty('--cx', sx + 'px');
+        spotlight.style.setProperty('--cy', sy + 'px');
+        requestAnimationFrame(tick);
+      })();
+
+      // Click ripple
+      document.addEventListener('mousedown', e => {
+        const ripple = document.createElement('div');
+        ripple.className = 'cursor-ripple';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+        document.body.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+      });
+
+      // Hover interactions
+      const hoverEls = 'a,button,.tag,.tech-cell,.project-row,.ach-item,.btn,.pf-btn,.badge-glass,.contact-link-row,.f-btn,.btn-resume,.project-arrow';
+      function bindHover(el) {
+        if (el._cursorBound) return;
+        el._cursorBound = true;
+        el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+      }
+      document.querySelectorAll(hoverEls).forEach(bindHover);
+
+      // Re-attach for dynamically added elements
+      new MutationObserver(() => {
+        document.querySelectorAll(hoverEls).forEach(bindHover);
+      }).observe(document.body, { childList: true, subtree: true });
     })();
-    document.querySelectorAll('a,button,.tag,.tech-cell,.project-row,.ach-item,.btn,.pf-btn').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cur-big'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-big'));
-    });
 
     /* ═══ SCROLL REVEAL ═════════════════════════════════ */
     const obs = new IntersectionObserver(entries => {
