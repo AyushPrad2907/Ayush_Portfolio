@@ -1563,6 +1563,227 @@
       padding-top: .3rem
     }
 
+    /* ═══ EXPERIENCE (ROADMAP) ═════════════════════ */
+    #experience {
+      padding: 8rem 0;
+      background: linear-gradient(180deg, transparent 0%, var(--bg2) 100%);
+      transition: background .4s
+    }
+
+    .roadmap-container {
+      max-width: 900px;
+      margin: 0 auto
+    }
+
+    .roadmap-timeline {
+      position: relative;
+      padding: 2rem 0
+    }
+
+    .roadmap-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: timelineGrow 1s .5s ease-out forwards
+    }
+
+    @keyframes timelineGrow {
+      from {
+        opacity: 0;
+        height: 0
+      }
+      to {
+        opacity: 1;
+        height: 100%
+      }
+    }
+
+    .roadmap-item {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      animation: roadmapItemFade .8s ease-out forwards
+    }
+
+    @keyframes roadmapItemFade {
+      from {
+        opacity: 0;
+        transform: translateY(30px)
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .roadmap-item:nth-child(1) {
+      animation-delay: .3s
+    }
+
+    .roadmap-item:nth-child(2) {
+      animation-delay: .5s
+    }
+
+    .roadmap-item:nth-child(3) {
+      animation-delay: .7s
+    }
+
+    .roadmap-item:nth-child(4) {
+      animation-delay: .9s
+    }
+
+    .roadmap-content {
+      padding: 1.8rem;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      transition: all .3s cubic-bezier(.4, 0, .2, 1);
+      position: relative
+    }
+
+    .roadmap-item:nth-child(even) .roadmap-content {
+      order: -1
+    }
+
+    .roadmap-content::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all .3s
+    }
+
+    .roadmap-item:nth-child(odd) .roadmap-content::after {
+      right: -42px
+    }
+
+    .roadmap-item:nth-child(even) .roadmap-content::after {
+      left: -42px
+    }
+
+    .roadmap-content:hover {
+      border-color: var(--accent);
+      background: var(--bg2);
+      box-shadow: 0 8px 24px rgba(192, 82, 42, .15)
+    }
+
+    .roadmap-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem
+    }
+
+    .roadmap-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg);
+      font-weight: bold;
+      font-size: 1.2rem;
+      position: relative;
+      box-shadow: 0 0 0 4px var(--bg), 0 0 12px rgba(192, 82, 42, .3);
+      transition: all .3s;
+      animation: dotPulseXL 2.5s ease-in-out infinite
+    }
+
+    @keyframes dotPulseXL {
+      0%, 100% {
+        box-shadow: 0 0 0 4px var(--bg), 0 0 12px rgba(192, 82, 42, .3)
+      }
+      50% {
+        box-shadow: 0 0 0 4px var(--bg), 0 0 24px rgba(192, 82, 42, .5)
+      }
+    }
+
+    .roadmap-content:hover .roadmap-dot {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px var(--bg), 0 0 28px rgba(192, 82, 42, .6)
+    }
+
+    .roadmap-year {
+      font-family: 'Fira Code', monospace;
+      font-size: .65rem;
+      color: var(--muted);
+      letter-spacing: .12em;
+      text-transform: uppercase
+    }
+
+    .roadmap-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      margin-bottom: .3rem;
+      color: var(--ink);
+      transition: color .3s
+    }
+
+    .roadmap-content:hover .roadmap-title {
+      color: var(--accent)
+    }
+
+    .roadmap-role {
+      font-size: .85rem;
+      color: var(--mid);
+      margin-bottom: .8rem
+    }
+
+    .roadmap-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem
+    }
+
+    .roadmap-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: .55rem;
+      padding: .2rem .6rem;
+      border-radius: 2px;
+      background: var(--bg2);
+      color: var(--mid);
+      border: 1px solid var(--line);
+      transition: all .2s
+    }
+
+    .roadmap-content:hover .roadmap-tag {
+      border-color: var(--accent);
+      background: var(--bg);
+      color: var(--accent)
+    }
+
+    .roadmap-badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: .5rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .3rem .8rem;
+      border-radius: 20px;
+      background: rgba(34, 197, 94, .1);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, .3);
+      margin-top: .8rem
+    }
+
     /* ═══ TESTIMONIALS ══════════════════════════ */
     #testimonials {
       padding: 7rem 0
@@ -2782,6 +3003,66 @@
       animation: certShimmer 3s ease-in-out 1
     }
 
+    /* ═══ EXPERIENCE ════════════════════════════ */
+    #experience {
+      padding: 7rem 0
+    }
+
+    .exp-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 160px;
+      gap: 2rem;
+      align-items: start;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--line);
+      transition: border-color .4s, background .3s, box-shadow .4s, transform .4s
+    }
+
+    .exp-row:hover {
+      transform: translateY(-4px);
+      background: var(--bg2);
+      padding-left: .8rem;
+      border-bottom-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(192, 82, 42, .12)
+    }
+
+    .exp-date {
+      font-family: 'Fira Code', monospace;
+      font-size: .67rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      padding-top: .3rem
+    }
+
+    .exp-company {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      margin-bottom: .3rem;
+      transition: color .3s
+    }
+
+    .exp-row:hover .exp-company {
+      color: var(--accent)
+    }
+
+    .exp-role {
+      font-size: .84rem;
+      color: var(--mid);
+      font-weight: 500
+    }
+
+    .exp-badge {
+      text-align: right;
+      font-family: 'Fira Code', monospace;
+      font-size: .58rem;
+      color: var(--accent);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding-top: .3rem
+    }
+
     @media(max-width:768px) {
       .cert-grid {
         grid-template-columns: 1fr
@@ -2828,6 +3109,7 @@
       <li><a href="#tech">Stack</a></li>
       <li><a href="#projects">Work</a></li>
       <li><a href="#achievements">Awards</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#certifications">Certs</a></li>
       <li><a href="#testimonials">Testimonials</a></li>
@@ -3380,12 +3662,81 @@
   </section>
   <div class="rule"></div>
 
+  <!-- ═══ EXPERIENCE (ROADMAP) ═══════════════════════════════════ -->
+  <section id="experience">
+    <div class="container roadmap-container">
+      <div class="eyebrow" data-reveal="fade">03 — Professional Journey</div>
+      <h2 class="section-heading" data-reveal="up">Career <em>Roadmap</em></h2>
+      
+      <div class="roadmap-timeline" data-reveal="up" style="margin-top: 4rem">
+        <!-- Current Role -->
+        <div class="roadmap-item">
+          <div class="roadmap-content">
+            <div class="roadmap-year">Starting Now</div>
+            <div class="roadmap-title">ImplexEdu</div>
+            <div class="roadmap-role">Full Stack Developer Intern</div>
+            <div class="roadmap-tags">
+              <span class="roadmap-tag">React</span>
+              <span class="roadmap-tag">Node.js</span>
+              <span class="roadmap-tag">MongoDB</span>
+            </div>
+            <span class="roadmap-badge">Now Active</span>
+          </div>
+          <div class="roadmap-node">
+            <div class="roadmap-dot">🚀</div>
+            <div class="roadmap-year">Mar 2026</div>
+          </div>
+          <div></div>
+        </div>
+
+        <!-- Future Role 1 -->
+        <div class="roadmap-item">
+          <div></div>
+          <div class="roadmap-node">
+            <div class="roadmap-dot">📈</div>
+            <div class="roadmap-year">2026</div>
+          </div>
+          <div class="roadmap-content">
+            <div class="roadmap-year">Next Phase</div>
+            <div class="roadmap-title">Senior Developer</div>
+            <div class="roadmap-role">Lead Feature Development & Architecture</div>
+            <div class="roadmap-tags">
+              <span class="roadmap-tag">System Design</span>
+              <span class="roadmap-tag">Mentoring</span>
+              <span class="roadmap-tag">Leadership</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Future Role 2 -->
+        <div class="roadmap-item">
+          <div class="roadmap-content">
+            <div class="roadmap-year">Future Goal</div>
+            <div class="roadmap-title">Tech Lead / Architect</div>
+            <div class="roadmap-role">Shape Technology Direction & Innovation</div>
+            <div class="roadmap-tags">
+              <span class="roadmap-tag">AI/ML Integration</span>
+              <span class="roadmap-tag">Scalability</span>
+              <span class="roadmap-tag">Strategy</span>
+            </div>
+          </div>
+          <div class="roadmap-node">
+            <div class="roadmap-dot">🏆</div>
+            <div class="roadmap-year">2027+</div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="rule"></div>
+
   <!-- ═══ PROJECTS ══════════════════════════════════════ -->
   <section id="projects">
     <div class="container">
       <div class="projects-header" data-reveal="up">
         <div>
-          <div class="eyebrow">03 — Selected Work</div>
+          <div class="eyebrow">04 — Selected Work</div>
           <h2 class="section-heading">Projects I've <em>built</em></h2>
         </div>
         <div class="projects-count">09</div>
@@ -3543,7 +3894,7 @@
   <!-- ═══ ACHIEVEMENTS ══════════════════════════════════ -->
   <section id="achievements">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">04 — Recognition</div>
+      <div class="eyebrow" data-reveal="fade">05 — Recognition</div>
       <h2 class="section-heading" data-reveal="up">Awards &amp; <em>Milestones</em></h2>
       <div class="ach-grid">
         <div class="ach-item" data-reveal="up"><span class="ach-mark">🏆</span>
@@ -3617,7 +3968,7 @@
   <!-- ═══ EDUCATION ═════════════════════════════════════ -->
   <section id="education">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">05 — Academic Path</div>
+      <div class="eyebrow" data-reveal="fade">06 — Academic Path</div>
       <h2 class="section-heading" data-reveal="up">Education &amp; <em>Learning</em></h2>
       <div style="margin-top:3rem">
         <div class="edu-row" data-reveal="up" style="transition-delay:.1s">
@@ -3652,7 +4003,7 @@
   <!-- ═══ CERTIFICATIONS ═══════════════════════════════ -->
   <section id="certifications">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">06 — Credentials</div>
+      <div class="eyebrow" data-reveal="fade">07 — Credentials</div>
       <h2 class="section-heading" data-reveal="up">Certifications &amp; <em>Badges</em></h2>
       <div class="cert-grid">
 
@@ -3779,7 +4130,7 @@
   <!-- ═══ TESTIMONIALS ═════════════════════════════════ -->
   <section id="testimonials">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">07 — Recognition</div>
+      <div class="eyebrow" data-reveal="fade">08 — Recognition</div>
       <h2 class="section-heading" data-reveal="up">What <em>people say</em></h2>
       <div class="testi-wrapper" data-reveal="up" style="margin-top:3rem">
         <div class="testi-carousel">
@@ -3995,7 +4346,7 @@
   <!-- ═══ CONTACT ═══════════════════════════════════════ -->
   <section id="contact">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">08 — Get In Touch</div>
+      <div class="eyebrow" data-reveal="fade">09 — Get In Touch</div>
       <h2 class="section-heading" data-reveal="up">Let's build <em>something.</em></h2>
       <div class="contact-layout">
         <div data-reveal="left">
