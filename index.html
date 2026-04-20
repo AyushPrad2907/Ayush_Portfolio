@@ -214,7 +214,27 @@
       transform-origin: left center;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       box-shadow: 0 0 12px rgba(224, 112, 72, .35);
-      transition: transform .12s linear, opacity .3s
+      transition: transform .12s linear, opacity .3s, box-shadow .4s cubic-bezier(.34, 1.56, .64, 1)
+    }
+
+    #reading-progress.pulse .reading-progress__bar {
+      animation: readingProgressPulse .6s cubic-bezier(.34, 1.56, .64, 1) forwards;
+      box-shadow: 0 0 18px rgba(224, 112, 72, .5), 0 0 8px rgba(224, 112, 72, .3)
+    }
+
+    @keyframes readingProgressPulse {
+      0% {
+        box-shadow: 0 0 12px rgba(224, 112, 72, .35);
+        filter: brightness(1)
+      }
+      50% {
+        box-shadow: 0 0 28px rgba(224, 112, 72, .65), 0 0 12px rgba(224, 112, 72, .4);
+        filter: brightness(1.15)
+      }
+      100% {
+        box-shadow: 0 0 12px rgba(224, 112, 72, .35);
+        filter: brightness(1)
+      }
     }
 
     /* ═══ NAV ══════════════════════════════════ */
@@ -4469,7 +4489,7 @@
   <footer>
     <span>© 2026 Ayush Pradhan</span>
     <span>Made with <span class="footer-heart">♥</span> by Ayush😊</span>
-    <span>Full Stack · AI · Vision</span>
+    <span>Full Stack · Vision</span>
   </footer>
 
   <a href="#" id="btt">↑</a>
@@ -4793,6 +4813,17 @@
     /* ═══ READING PROGRESS ═══════════════════════════════ */
     const readingProgress = document.getElementById('reading-progress');
     const readingProgressBar = readingProgress?.querySelector('.reading-progress__bar');
+    let lastSectionId = '';
+    let pulseTimeout;
+
+    function triggerProgressPulse() {
+      if (!readingProgress) return;
+      readingProgress.classList.remove('pulse');
+      void readingProgress.offsetWidth;
+      readingProgress.classList.add('pulse');
+      clearTimeout(pulseTimeout);
+      pulseTimeout = setTimeout(() => readingProgress.classList.remove('pulse'), 600);
+    }
 
     function updateReadingProgress() {
       if (!readingProgressBar || !readingProgress) return;
@@ -4801,6 +4832,16 @@
       const ratio = scrollable > 0 ? Math.min(scrollTop / scrollable, 1) : 0;
       readingProgressBar.style.transform = `scaleX(${ratio})`;
       readingProgress.style.opacity = scrollTop < 10 ? '.78' : '.92';
+
+      const sections = document.querySelectorAll('section[id]');
+      let currentSection = '';
+      sections.forEach(s => {
+        if (scrollTop >= s.offsetTop - 200) currentSection = s.id;
+      });
+      if (currentSection && currentSection !== lastSectionId) {
+        lastSectionId = currentSection;
+        triggerProgressPulse();
+      }
     }
 
     let progressTicking = false;
