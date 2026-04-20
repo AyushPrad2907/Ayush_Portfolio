@@ -189,6 +189,34 @@
       }
     }
 
+    /* ═══ READING PROGRESS ═════════════════════ */
+    #reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      z-index: 650;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(26, 23, 20, .06), rgba(26, 23, 20, .02));
+      opacity: .92;
+      backdrop-filter: blur(2px)
+    }
+
+    [data-theme="dark"] #reading-progress {
+      background: linear-gradient(90deg, rgba(240, 235, 224, .12), rgba(240, 235, 224, .04))
+    }
+
+    #reading-progress .reading-progress__bar {
+      width: 100%;
+      height: 100%;
+      transform: scaleX(0);
+      transform-origin: left center;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 12px rgba(224, 112, 72, .35);
+      transition: transform .12s linear, opacity .3s
+    }
+
     /* ═══ NAV ══════════════════════════════════ */
     nav {
       position: fixed;
@@ -2818,6 +2846,10 @@
     }
 
     @media(max-width:600px) {
+      #reading-progress {
+        height: 3px
+      }
+
       .container {
         padding: 0 1.5rem
       }
@@ -3073,6 +3105,10 @@
 
 <body class="is-loading">
 
+  <div id="reading-progress" aria-hidden="true">
+    <div class="reading-progress__bar"></div>
+  </div>
+
   <!-- ═══ LOADER ═════════════════════════════════════════ -->
   <div id="loader-screen">
     <div class="loader-curtain loader-curtain--top"></div>
@@ -3217,8 +3253,8 @@
           <h2 class="section-heading" data-reveal="up" style="margin-bottom:1.8rem">Building the<br><em>future with
               code.</em></h2>
           <p class="about-body" data-reveal="up" style="transition-delay:.15s">I'm <strong>Ayush Pradhan</strong>, a
-            passionate Full Stack Developer and AI Engineer currently pursuing <strong>B.Tech in Computer Science
-              Engineering at Centurion University, Bhubaneswar</strong>.<br><br>My interests lie in <strong>AI, Computer
+            passionate Full Stack Developer and Intelligent Systems Developer currently pursuing <strong>B.Tech in Computer Science
+              Engineering at Centurion University, Bhubaneswar</strong>.<br><br>My interests lie in <strong>Artificial Super Intelligence, Computer
               Vision, and Full Stack Web Development</strong>, where I combine creativity, design, and logic to build
             innovative real-world solutions. Skilled in Python, Java, and C — I enjoy developing AI-integrated
             applications and dynamic web systems.<br><br>I believe in learning through building, experimenting, and
@@ -4753,6 +4789,34 @@
     const btt = document.getElementById('btt');
     window.addEventListener('scroll', () => btt.classList.toggle('show', scrollY > 500), { passive: true });
     btt.addEventListener('click', e => { e.preventDefault(); scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    /* ═══ READING PROGRESS ═══════════════════════════════ */
+    const readingProgress = document.getElementById('reading-progress');
+    const readingProgressBar = readingProgress?.querySelector('.reading-progress__bar');
+
+    function updateReadingProgress() {
+      if (!readingProgressBar || !readingProgress) return;
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollable > 0 ? Math.min(scrollTop / scrollable, 1) : 0;
+      readingProgressBar.style.transform = `scaleX(${ratio})`;
+      readingProgress.style.opacity = scrollTop < 10 ? '.78' : '.92';
+    }
+
+    let progressTicking = false;
+    function scheduleReadingProgressUpdate() {
+      if (progressTicking) return;
+      progressTicking = true;
+      requestAnimationFrame(() => {
+        updateReadingProgress();
+        progressTicking = false;
+      });
+    }
+
+    window.addEventListener('scroll', scheduleReadingProgressUpdate, { passive: true });
+    window.addEventListener('resize', updateReadingProgress, { passive: true });
+    window.addEventListener('load', updateReadingProgress, { passive: true });
+    updateReadingProgress();
 
     /* ═══ FORM (Formspree) ═════════════════════════════════╗
        This handler prevents the page from reloading, submits via
