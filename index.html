@@ -4471,10 +4471,10 @@
         <form id="contact-form" class="contact-form" data-reveal="right" action="https://formspree.io/f/mgoldrjv"
           method="POST">
           <div class="f-group"><label class="f-label">Your Name</label>
-            <input type="text" name="name" class="f-input" placeholder="John Doe" required>
+            <input type="text" name="name" class="f-input" placeholder="Your name" required>
           </div>
           <div class="f-group"><label class="f-label">Email Address</label>
-            <input type="email" name="email" class="f-input" placeholder="john@example.com" required>
+            <input type="email" name="email" class="f-input" placeholder="yourname@example.com" required>
           </div>
           <div class="f-group"><label class="f-label">Message</label>
             <textarea name="message" class="f-textarea" placeholder="Let's collaborate on something great…"
@@ -4610,13 +4610,28 @@
     const toggle = document.getElementById('theme-toggle');
     const icon = document.getElementById('theme-icon');
     let isDark = false;
-    toggle.addEventListener('click', () => {
-      isDark = !isDark;
+
+    function applyTheme(dark) {
+      isDark = dark;
       htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
       icon.textContent = isDark ? '🌙' : '☀️';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
       initStars();
       checkStars();
-    });
+    }
+
+    function loadThemePreference() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        isDark = saved === 'dark';
+      } else {
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      applyTheme(isDark);
+    }
+
+    loadThemePreference();
+    toggle.addEventListener('click', () => applyTheme(!isDark));
 
     /* ═══ CURSOR ════════════════════════════════════════ */
     (function initCursor() {
