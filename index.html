@@ -1471,6 +1471,12 @@
       border: 1px solid rgba(253, 186, 116, .2)
     }
 
+    .cat-java {
+      background: rgba(244, 116, 33, .12);
+      color: #f47421;
+      border: 1px solid rgba(244, 116, 33, .2)
+    }
+
     .project-arrow {
       font-size: 1.2rem;
       color: var(--line);
@@ -3829,7 +3835,7 @@
           <div class="eyebrow">04 — Selected Work</div>
           <h2 class="section-heading">Projects I've <em>built</em></h2>
         </div>
-        <div class="projects-count">10</div>
+          <div class="projects-count">11</div>
       </div>
 
       <!-- Filter Tabs -->
@@ -3839,6 +3845,7 @@
         <button class="pf-btn" data-filter="ai">AI / NLP</button>
         <button class="pf-btn" data-filter="cv">Computer Vision</button>
         <button class="pf-btn" data-filter="python">Python</button>
+        <button class="pf-btn" data-filter="java">Java</button>
       </div>
 
       <div class="project-list">
@@ -3988,6 +3995,18 @@
                 class="chip">UI/UX</span><span class="chip">Startup Assignment</span></div>
           </div>
           <a href="https://github.com/AyushPrad2907" target="_blank" class="project-arrow" title="View Profile">↗</a>
+        </div>
+
+        <div class="project-row" data-reveal="up" data-cat="java">
+          <div class="project-num">11</div>
+          <div class="project-content">
+            <span class="proj-cat-badge cat-java">Java · CLI</span>
+            <span class="project-emoji-big">🧾</span>
+            <div class="project-name">Personal Expense Tracker</div>
+            <div class="project-desc">Terminal-based Java expense tracker built as a college project. It is currently CLI-first while I continue learning Spring Boot and Maven, and it was a strong hands-on experience for understanding OOP concepts.</div>
+            <div class="project-chips"><span class="chip">Java</span><span class="chip">OOP</span><span class="chip">CLI</span><span class="chip">College Project</span></div>
+          </div>
+          <a href="https://github.com/AyushPrad2907/Personal-Expense-Tracker" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
       </div>
@@ -4842,7 +4861,7 @@
         if (!countEl || countEl.dataset.animated) return;
         countEl.dataset.animated = 'true';
         let current = 0;
-        const target = 10;
+        const target = 11;
         const timer = setInterval(() => {
           current = Math.min(current + 1, target);
           countEl.textContent = String(current).padStart(2, '0');
