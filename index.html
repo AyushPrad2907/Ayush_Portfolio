@@ -518,30 +518,36 @@
     /* ═══ REVEAL ════════════════════════════════ */
     [data-reveal] {
       opacity: 0;
-      transition: opacity .75s cubic-bezier(.4, 0, .2, 1), transform .75s cubic-bezier(.4, 0, .2, 1)
+      --reveal-delay: 0ms;
+      filter: blur(2px);
+      will-change: transform, opacity;
+      transition:
+        opacity .82s cubic-bezier(.22, 1, .36, 1),
+        transform .9s cubic-bezier(.22, 1, .36, 1),
+        filter .82s cubic-bezier(.22, 1, .36, 1)
     }
 
     [data-reveal="up"] {
-      transform: translateY(36px)
+      transform: translateY(44px) scale(.985)
     }
 
     [data-reveal="left"] {
-      transform: translateX(-36px)
+      transform: translateX(-42px)
     }
 
     [data-reveal="right"] {
-      transform: translateX(36px)
+      transform: translateX(42px)
     }
 
     [data-reveal="scale"] {
-      transform: scale(.94)
+      transform: scale(.92)
     }
-
-    [data-reveal="fade"] {}
 
     [data-reveal].is-visible {
       opacity: 1;
-      transform: none
+      transform: none;
+      filter: blur(0);
+      transition-delay: var(--reveal-delay)
     }
 
     /* ═══ HERO ══════════════════════════════════ */
@@ -1346,6 +1352,12 @@
     }
 
     .project-row {
+      --rx: 0deg;
+      --ry: 0deg;
+      --tx: 0px;
+      --ty: 0px;
+      --mx: 50%;
+      --my: 50%;
       display: grid;
       grid-template-columns: 54px 1fr auto;
       align-items: start;
@@ -1354,7 +1366,10 @@
       border-bottom: 1px solid var(--line);
       cursor: none;
       position: relative;
-      transition: padding-left .3s, border-color .4s, opacity .4s, transform .4s, box-shadow .4s
+      transform-style: preserve-3d;
+      transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0);
+      transition: padding-left .3s, border-color .4s, opacity .4s,
+        transform .45s cubic-bezier(.22, 1, .36, 1), box-shadow .45s cubic-bezier(.22, 1, .36, 1)
     }
 
     .project-row.hidden {
@@ -1377,14 +1392,42 @@
       transition: opacity .3s
     }
 
+    .project-row::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--mx) var(--my), rgba(224, 112, 72, .16) 0%, transparent 52%);
+      opacity: 0;
+      transition: opacity .35s cubic-bezier(.22, 1, .36, 1)
+    }
+
     .project-row:hover {
       padding-left: .5rem;
-      transform: translateY(-8px);
+      transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), calc(var(--ty) - 8px), 0);
       box-shadow: 0 12px 32px rgba(192, 82, 42, .15)
     }
 
     .project-row:hover::before {
       opacity: 1
+    }
+
+    .project-row:hover::after,
+    .project-row:focus-within::after {
+      opacity: 1
+    }
+
+    .project-num,
+    .project-content,
+    .project-arrow {
+      transform: translateZ(16px);
+      transition: transform .4s cubic-bezier(.22, 1, .36, 1)
+    }
+
+    .project-row:hover .project-content,
+    .project-row:hover .project-arrow,
+    .project-row:hover .project-num {
+      transform: translateZ(26px)
     }
 
     .project-num {
@@ -2933,6 +2976,29 @@
         flex-direction: column;
         gap: .5rem;
         text-align: center
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        transition: none;
+        filter: none
+      }
+
+      .project-row {
+        transform: none !important;
+        transition: none
+      }
+
+      .project-row::after {
+        display: none
+      }
+
+      .project-num,
+      .project-content,
+      .project-arrow {
+        transform: none;
+        transition: none
       }
     }
 
@@ -4746,9 +4812,20 @@
 
     /* ═══ SCROLL REVEAL ═════════════════════════════════ */
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
-    }, { threshold: .12 });
-    document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-visible');
+        obs.unobserve(e.target);
+      });
+    }, { threshold: .14, rootMargin: '0px 0px -10% 0px' });
+
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      const section = el.closest('section');
+      const siblings = section ? [...section.querySelectorAll('[data-reveal]')] : [];
+      const idxInSection = Math.max(0, siblings.indexOf(el));
+      el.style.setProperty('--reveal-delay', `${Math.min(idxInSection * 70, 420)}ms`);
+      obs.observe(el);
+    });
 
     /* ═══ TECH CELLS WAVE ═══════════════════════════════ */
     const cells = document.querySelectorAll('.tech-cell');
@@ -4835,6 +4912,41 @@
         });
       });
     });
+
+    /* ═══ PROJECT CARD PARALLAX ═════════════════════════ */
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (canHover && !reduceMotion) {
+      document.querySelectorAll('.project-row').forEach(row => {
+        row.addEventListener('mousemove', e => {
+          const rect = row.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+
+          const rx = ((0.5 - py) * 6).toFixed(2);
+          const ry = ((px - 0.5) * 8).toFixed(2);
+          const tx = ((px - 0.5) * 3).toFixed(2);
+          const ty = ((py - 0.5) * -2.4).toFixed(2);
+
+          row.style.setProperty('--rx', `${rx}deg`);
+          row.style.setProperty('--ry', `${ry}deg`);
+          row.style.setProperty('--tx', `${tx}px`);
+          row.style.setProperty('--ty', `${ty}px`);
+          row.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+          row.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+        });
+
+        row.addEventListener('mouseleave', () => {
+          row.style.setProperty('--rx', '0deg');
+          row.style.setProperty('--ry', '0deg');
+          row.style.setProperty('--tx', '0px');
+          row.style.setProperty('--ty', '0px');
+          row.style.setProperty('--mx', '50%');
+          row.style.setProperty('--my', '50%');
+        });
+      });
+    }
 
     /* ═══ COUNT UP ══════════════════════════════════════ */
     const statObs = new IntersectionObserver(entries => {
