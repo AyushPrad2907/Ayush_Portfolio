@@ -3229,6 +3229,23 @@
         grid-template-columns: 1fr
       }
     }
+    /* Lottie float animation */
+    .lottie-float {
+      pointer-events: none;
+      will-change: transform;
+      opacity: .98;
+      animation: floatY 6s ease-in-out infinite;
+      transition: opacity .3s;
+    }
+
+    .lottie-float.slow { animation-duration: 9s }
+    .lottie-float.fast { animation-duration: 4.5s }
+
+    @keyframes floatY {
+      0% { transform: translateY(0) }
+      50% { transform: translateY(-10px) }
+      100% { transform: translateY(0) }
+    }
   </style>
 </head>
 
@@ -3339,6 +3356,16 @@
         <div class="hero-float-tag">Computer Vision</div>
         <div class="hero-float-tag">Full Stack Dev</div>
         <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_jtbfg2nb.json" background="transparent" speed="1" loop autoplay style="width:200px;height:200px;position:absolute;top:12%;right:12%;pointer-events:none;">
+        </lottie-player>
+        <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_cg5x8j8k.json" background="transparent" speed="1" loop autoplay style="width:140px;height:140px;position:absolute;bottom:8%;left:8%;pointer-events:none;">
+        </lottie-player>
+        <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_5ngs2ksb.json" background="transparent" speed="1" loop autoplay style="width:140px;height:140px;position:absolute;bottom:6%;right:6%;pointer-events:none;">
+        </lottie-player>
+        <lottie-player class="lottie-float slow" src="https://assets1.lottiefiles.com/packages/lf20_jmgekfqg.json" background="transparent" speed="1" loop autoplay style="width:120px;height:120px;position:absolute;top:38%;left:6%;pointer-events:none;animation-delay:.2s;">
+        </lottie-player>
+        <lottie-player class="lottie-float fast" src="https://assets2.lottiefiles.com/packages/lf20_u4yrau.json" background="transparent" speed="1" loop autoplay style="width:120px;height:120px;position:absolute;top:36%;right:6%;pointer-events:none;animation-delay:.4s;">
+        </lottie-player>
+        <lottie-player class="lottie-float" src="https://assets6.lottiefiles.com/packages/lf20_touohxv0.json" background="transparent" speed="1" loop autoplay style="width:160px;height:160px;position:absolute;left:50%;transform:translateX(-50%);bottom:4%;pointer-events:none;animation-delay:.6s;">
         </lottie-player>
         <div class="profile-frame">
           <div class="profile-corner tl"></div>
