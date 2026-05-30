@@ -3246,6 +3246,26 @@
       50% { transform: translateY(-10px) }
       100% { transform: translateY(0) }
     }
+
+    /* Hero Lottie layout and blending */
+    .hero-lottie-decor {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .hero-lottie-decor lottie-player {
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.16)) saturate(1.05);
+      opacity: .95;
+      transition: transform .45s ease, opacity .3s ease;
+    }
+
+    @media (max-width: 900px) {
+      .hero-lottie-decor lottie-player { display: none }
+    }
   </style>
 </head>
 
@@ -3367,6 +3387,18 @@
         </lottie-player>
         <lottie-player class="lottie-float" src="https://assets6.lottiefiles.com/packages/lf20_touohxv0.json" background="transparent" speed="1" loop autoplay style="width:160px;height:160px;position:absolute;left:50%;transform:translateX(-50%);bottom:4%;pointer-events:none;animation-delay:.6s;">
         </lottie-player>
+        <div class="hero-lottie-decor" aria-hidden="true">
+          <lottie-player class="lottie-float slow" src="https://assets2.lottiefiles.com/packages/lf20_jtbfg2nb.json" background="transparent" speed="0.9" loop autoplay style="width:220px;height:220px;position:absolute;top:4%;left:4%;pointer-events:none;opacity:.9;transform:translateZ(0);">
+          </lottie-player>
+          <lottie-player class="lottie-float" src="https://assets10.lottiefiles.com/packages/lf20_cg5x8j8k.json" background="transparent" speed="1.1" loop autoplay style="width:160px;height:160px;position:absolute;top:18%;left:12%;pointer-events:none;opacity:.95;">
+          </lottie-player>
+          <lottie-player class="lottie-float fast" src="https://assets9.lottiefiles.com/packages/lf20_5ngs2ksb.json" background="transparent" speed="1.2" loop autoplay style="width:110px;height:110px;position:absolute;top:26%;right:8%;pointer-events:none;opacity:.95;">
+          </lottie-player>
+          <lottie-player class="lottie-float" src="https://assets1.lottiefiles.com/packages/lf20_jmgekfqg.json" background="transparent" speed="1" loop autoplay style="width:90px;height:90px;position:absolute;bottom:18%;left:14%;pointer-events:none;opacity:.95;">
+          </lottie-player>
+          <lottie-player class="lottie-float slow" src="https://assets6.lottiefiles.com/packages/lf20_touohxv0.json" background="transparent" speed="0.9" loop autoplay style="width:120px;height:120px;position:absolute;bottom:22%;right:12%;pointer-events:none;opacity:.95;">
+          </lottie-player>
+        </div>
         <div class="profile-frame">
           <div class="profile-corner tl"></div>
           <div class="profile-corner tr"></div>
