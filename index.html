@@ -5,9 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayush Pradhan — Full Stack Developer & Intelligent Systems Developer</title>
+  <meta name="description" content="Full stack developer building scalable web apps and AI-driven systems that turn complex ideas into reliable, high-impact digital products.">
   <meta property="og:title" content="Ayush Pradhan — Full Stack Developer & Intelligent Systems Developer">
-  <meta property="og:description"
-    content="Full stack developer building scalable web apps and AI-driven systems that turn complex ideas into reliable, high-impact digital products.">
+  <meta property="og:description" content="Full stack developer building scalable web apps and AI-driven systems that turn complex ideas into reliable, high-impact digital products.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ayushpradhan.dev">
+  <meta property="og:image" content="https://ayushpradhan.dev/assets/ayush.jpg">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
@@ -71,8 +74,12 @@
       font-weight: 400;
       line-height: 1.75;
       overflow-x: hidden;
-      cursor: none;
       transition: background .5s, color .4s
+    }
+
+    /* Hide system cursor only on fine-pointer (mouse) devices */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none }
     }
 
     /* ═══ STARFIELD CANVAS ═════════════════════ */
@@ -135,7 +142,7 @@
       z-index: 9999;
       pointer-events: none;
       transform: translate(-50%, -50%) rotate(45deg);
-      will-change: left, top, transform;
+      will-change: transform;
       background: var(--accent);
       border-radius: 2px;
       opacity: .9;
@@ -285,7 +292,7 @@
       text-transform: uppercase;
       transition: color .2s;
       position: relative;
-      cursor: none
+      cursor: pointer
     }
 
     .nav-center a::after {
@@ -323,7 +330,7 @@
       border-radius: 13px;
       background: var(--bg3);
       border: 1.5px solid var(--line);
-      cursor: none;
+      cursor: pointer;
       position: relative;
       transition: background .3s, border-color .3s;
       flex-shrink: 0
@@ -355,7 +362,7 @@
       font-size: .84rem;
       font-weight: 600;
       text-decoration: none;
-      cursor: none;
+      cursor: pointer;
       transition: all .25s;
       border: 1.5px solid transparent;
       letter-spacing: .02em;
@@ -541,6 +548,10 @@
 
     [data-reveal="scale"] {
       transform: scale(.92)
+    }
+
+    [data-reveal="fade"] {
+      transform: none
     }
 
     [data-reveal].is-visible {
@@ -926,7 +937,7 @@
       font-size: .83rem;
       font-weight: 600;
       text-decoration: none;
-      cursor: none;
+      cursor: pointer;
       transition: transform .25s, box-shadow .25s, background .25s, color .25s, border-color .25s;
       border: 1.5px solid transparent;
       letter-spacing: .05em;
@@ -966,7 +977,7 @@
       font-size: .75rem;
       font-weight: 700;
       text-decoration: none;
-      cursor: none;
+      cursor: pointer;
       transition: transform .25s, box-shadow .25s, background .25s;
       border: 1px solid transparent;
       letter-spacing: .08em;
@@ -1654,7 +1665,7 @@
       border: 1px solid var(--line);
       background: transparent;
       color: var(--mid);
-      cursor: none;
+      cursor: pointer;
       transition: all .25s
     }
 
@@ -1687,7 +1698,7 @@
       gap: 2rem;
       padding: 2rem 0;
       border-bottom: 1px solid var(--line);
-      cursor: none;
+      cursor: pointer;
       position: relative;
       transform-style: preserve-3d;
       transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0);
@@ -1948,7 +1959,7 @@
       border-radius: 4px;
       font-size: .85rem;
       font-weight: 600;
-      cursor: none;
+      cursor: pointer;
       border: 1.5px dashed var(--accent);
       color: var(--accent);
       background: transparent;
@@ -2391,7 +2402,7 @@
       border-radius: 50%;
       border: none;
       background: rgba(26, 23, 20, .15);
-      cursor: none;
+      cursor: pointer;
       transition: all .3s cubic-bezier(.4, 0, .2, 1);
       padding: 0
     }
@@ -2604,7 +2615,7 @@
       font-family: 'Outfit', sans-serif;
       font-size: .85rem;
       font-weight: 600;
-      cursor: none;
+      cursor: pointer;
       transition: all .25s;
       letter-spacing: .02em
     }
@@ -2663,7 +2674,6 @@
       justify-content: center;
       font-size: 1.1rem;
       text-decoration: none;
-      cursor: none;
       opacity: 0;
       transform: translateY(14px);
       transition: opacity .3s, transform .3s, background .2s
@@ -3443,6 +3453,135 @@
       }
     }
 
+    /* ═══ MOBILE MENU CSS ══════════════════════ */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 22px;
+      height: 16px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      z-index: 600;
+    }
+
+    .menu-toggle-bar {
+      width: 100%;
+      height: 2px;
+      background-color: var(--ink);
+      transition: transform .3s, opacity .3s, background-color .4s;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .mobile-menu.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 9, 14, 0.4);
+      backdrop-filter: blur(8px);
+      transition: opacity .4s ease;
+    }
+
+    [data-theme="light"] .mobile-menu-overlay {
+      background: rgba(245, 240, 232, 0.4);
+    }
+
+    .mobile-menu-content {
+      position: relative;
+      width: min(300px, 80vw);
+      height: 100%;
+      background: var(--bg);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), background-color .4s;
+      z-index: 1001;
+    }
+
+    .mobile-menu.active .mobile-menu-content {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .menu-close {
+      background: transparent;
+      border: none;
+      font-size: 2.2rem;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: color .3s;
+    }
+
+    .menu-close:hover {
+      color: var(--accent);
+    }
+
+    .mobile-menu-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-menu-links a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
+      display: inline-block;
+    }
+
+    .mobile-menu-links a:hover,
+    .mobile-menu-links a.active {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 600px) {
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    /* On fine-pointer devices, re-apply cursor:none override for all interactive elements */
+    @media (hover: hover) and (pointer: fine) {
+      .btn, .btn-resume, .nav-center a, .theme-toggle,
+      .pf-btn, .project-row, .testi-dot, .btn-many-more,
+      .f-btn, .tech-cell, .contact-link-row, #btt,
+      .cert-card, .ach-item, .menu-toggle, .menu-close, .mobile-menu-links a {
+        cursor: none
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       [data-reveal] {
         transition: none;
@@ -3725,9 +3864,9 @@
     </div>
   </div>
 
-  <canvas id="star-canvas"></canvas>
-  <div id="cursor-spotlight"></div>
-  <div id="cursor-gem"></div>
+  <canvas id="star-canvas" aria-hidden="true"></canvas>
+  <div id="cursor-spotlight" aria-hidden="true"></div>
+  <div id="cursor-gem" aria-hidden="true"></div>
 
 
 
@@ -3748,8 +3887,37 @@
     <div class="nav-right">
       <span class="theme-icon" id="theme-icon">☀️</span>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+      
+      <!-- Hamburger Menu Button -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="menu-toggle-bar"></span>
+        <span class="menu-toggle-bar"></span>
+        <span class="menu-toggle-bar"></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <div class="nav-logo">Ayush<span>.</span></div>
+        <button class="menu-close" id="menu-close" aria-label="Close navigation menu">&times;</button>
+      </div>
+      <ul class="mobile-menu-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#tech">Stack</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#achievements">Awards</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#certifications">Certs</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
 
   <!-- ═══ HERO ═══════════════════════════════════════════ -->
   <section id="hero">
@@ -3808,14 +3976,13 @@
           <div class="hero-float-tag">Computer Vision</div>
           <div class="hero-float-tag">Full Stack Dev</div>
         </div>
-        <div class="hero-metric hero-metric-pride"><strong>World's #0</strong><span>Programmer</span></div>
+        <div class="hero-metric hero-metric-pride"><strong>World's #1</strong><span>Programmer</span></div>
         <div class="profile-frame">
           <div class="profile-corner tl"></div>
           <div class="profile-corner tr"></div>
           <div class="profile-corner bl"></div>
           <div class="profile-corner br"></div>
-          <div class="profile-avatar"><img src="assets/ayush.jpg" alt="Ayush Pradhan" class="profile-img" width="290"
-              height="370"></div>
+          <div class="profile-avatar"><img src="assets/ayush.jpg" alt="Ayush Pradhan — Full Stack Developer from Bhubaneswar" class="profile-img" width="290" height="370" loading="lazy" decoding="async"></div>
           <div class="profile-label"><span>Ayush Pradhan</span><span>Bhubaneswar ↗</span></div>
         </div>
       </div>
@@ -4066,7 +4233,7 @@
                   font-size="28" font-weight="bold" fill="#fff">Flask</text>
               </svg><span class="tech-name">Microframework</span></div>
           </div>
-        </div <!-- OpenCV -->
+        </div> <!-- OpenCV -->
         <div class="tech-cell">
           <div class="tech-cell-inner">
             <div class="tech-front"><svg class="tech-svg" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
@@ -4380,13 +4547,13 @@
 
       <!-- Filter Tabs -->
       <div class="proj-filters" data-reveal="fade">
-        <button class="pf-btn active" data-filter="all">All</button>
-        <button class="pf-btn" data-filter="web">Web</button>
-        <button class="pf-btn" data-filter="ai">AI / NLP</button>
-        <button class="pf-btn" data-filter="cv">Computer Vision</button>
-        <button class="pf-btn" data-filter="python">Python</button>
-        <button class="pf-btn" data-filter="cyber">Cyber Security</button>
-        <button class="pf-btn" data-filter="java">Java</button>
+        <button class="pf-btn active" data-filter="all" aria-pressed="true">All</button>
+        <button class="pf-btn" data-filter="web" aria-pressed="false">Web</button>
+        <button class="pf-btn" data-filter="ai" aria-pressed="false">AI / NLP</button>
+        <button class="pf-btn" data-filter="cv" aria-pressed="false">Computer Vision</button>
+        <button class="pf-btn" data-filter="python" aria-pressed="false">Python</button>
+        <button class="pf-btn" data-filter="cyber" aria-pressed="false">Cyber Security</button>
+        <button class="pf-btn" data-filter="java" aria-pressed="false">Java</button>
       </div>
 
       <div class="project-list">
@@ -4808,7 +4975,7 @@
       <div class="eyebrow" data-reveal="fade">08 — Recognition</div>
       <h2 class="section-heading" data-reveal="up">What <em>people say</em></h2>
       <div class="testi-wrapper" data-reveal="up" style="margin-top:3rem">
-        <div class="testi-carousel">
+        <div class="testi-carousel" aria-live="polite">
           <!-- Hackathon Judge -->
           <div class="testi-card">
             <div class="testi-quote">
@@ -5023,16 +5190,16 @@
         </div>
 
         <div class="testi-nav">
-          <button class="testi-dot active" data-slide="0"></button>
-          <button class="testi-dot" data-slide="1"></button>
-          <button class="testi-dot" data-slide="2"></button>
-          <button class="testi-dot" data-slide="3"></button>
-          <button class="testi-dot" data-slide="4"></button>
-          <button class="testi-dot" data-slide="5"></button>
-          <button class="testi-dot" data-slide="6"></button>
-          <button class="testi-dot" data-slide="7"></button>
-          <button class="testi-dot" data-slide="8"></button>
-          <button class="testi-dot" data-slide="9"></button>
+          <button class="testi-dot active" data-slide="0" aria-label="Go to testimonial slide 1"></button>
+          <button class="testi-dot" data-slide="1" aria-label="Go to testimonial slide 2"></button>
+          <button class="testi-dot" data-slide="2" aria-label="Go to testimonial slide 3"></button>
+          <button class="testi-dot" data-slide="3" aria-label="Go to testimonial slide 4"></button>
+          <button class="testi-dot" data-slide="4" aria-label="Go to testimonial slide 5"></button>
+          <button class="testi-dot" data-slide="5" aria-label="Go to testimonial slide 6"></button>
+          <button class="testi-dot" data-slide="6" aria-label="Go to testimonial slide 7"></button>
+          <button class="testi-dot" data-slide="7" aria-label="Go to testimonial slide 8"></button>
+          <button class="testi-dot" data-slide="8" aria-label="Go to testimonial slide 9"></button>
+          <button class="testi-dot" data-slide="9" aria-label="Go to testimonial slide 10"></button>
         </div>
       </div>
     </div>
@@ -5380,8 +5547,12 @@
     /* ═══ PROJECT FILTER ════════════════════════════════ */
     document.querySelectorAll('.pf-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.pf-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         const filter = btn.getAttribute('data-filter');
         document.querySelectorAll('.project-row').forEach(row => {
           const cats = row.getAttribute('data-cat') || '';
@@ -5459,7 +5630,7 @@
         if (!countEl || countEl.dataset.animated) return;
         countEl.dataset.animated = 'true';
         let current = 0;
-        const target = 11;
+        const target = 12;
         const timer = setInterval(() => {
           current = Math.min(current + 1, target);
           countEl.textContent = String(current).padStart(2, '0');
@@ -5468,6 +5639,39 @@
         projCountObs.unobserve(entry.target);
       });
     }, { threshold: .3 });
+
+    /* ═══ MOBILE MENU NAV ═══════════════════════════════ */
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+    const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+
+    function openMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.add('active');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+      }
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.remove('active');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      }
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    if (menuToggle) menuToggle.addEventListener('click', openMenu);
+    if (menuClose) menuClose.addEventListener('click', closeMenu);
+    if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
     const projHeader = document.querySelector('.projects-header');
     if (projHeader) projCountObs.observe(projHeader);
 
@@ -5684,19 +5888,28 @@
       });
     });
 
-    // Keyboard navigation
+    // Keyboard navigation (respect text inputs/textareas)
     document.addEventListener('keydown', e => {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
       if (e.key === 'ArrowLeft') prevSlide();
       if (e.key === 'ArrowRight') nextSlide();
     });
 
-    // Mouse wheel on carousel
+    // Touch navigation for carousel (swipe left/right)
     if (testiCarousel) {
-      testiCarousel.addEventListener('wheel', e => {
-        e.preventDefault();
-        if (e.deltaY > 0) nextSlide();
-        else prevSlide();
-      }, { passive: false });
+      let touchStartX = 0;
+      let touchEndX = 0;
+      testiCarousel.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      testiCarousel.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 50) {
+          nextSlide(); // swipe left
+        } else if (touchEndX > touchStartX + 50) {
+          prevSlide(); // swipe right
+        }
+      }, { passive: true });
     }
 
     // Start auto-slide
@@ -5730,7 +5943,6 @@
     }
 
   </script>
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </body>
 
 </html>
