@@ -1760,8 +1760,11 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at var(--mx) var(--my), rgba(224, 112, 72, .16) 0%, transparent 52%);
+      background: 
+        radial-gradient(circle at var(--mx) var(--my), rgba(224, 112, 72, .22) 0%, transparent 50%),
+        linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, .08) var(--gloss-pos, 50%), transparent 100%);
       opacity: 0;
+      mix-blend-mode: overlay;
       transition: opacity .35s cubic-bezier(.22, 1, .36, 1)
     }
 
@@ -5662,6 +5665,7 @@
           const ry = ((px - 0.5) * 8).toFixed(2);
           const tx = ((px - 0.5) * 3).toFixed(2);
           const ty = ((py - 0.5) * -2.4).toFixed(2);
+          const glossPos = ((px * 40) + 30).toFixed(1);
 
           row.style.setProperty('--rx', `${rx}deg`);
           row.style.setProperty('--ry', `${ry}deg`);
@@ -5669,6 +5673,7 @@
           row.style.setProperty('--ty', `${ty}px`);
           row.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
           row.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+          row.style.setProperty('--gloss-pos', `${glossPos}%`);
         });
 
         row.addEventListener('mouseleave', () => {
