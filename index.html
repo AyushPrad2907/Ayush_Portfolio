@@ -5425,8 +5425,8 @@
     (function initCursor() {
       const gem = document.getElementById('cursor-gem');
       const spotlight = document.getElementById('cursor-spotlight');
-      let isTouch = 'ontouchstart' in window;
-      if (isTouch) {
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+      if (!hasFinePointer) {
         gem.style.display = spotlight.style.display = 'none';
         document.body.style.cursor = 'auto';
         return;
