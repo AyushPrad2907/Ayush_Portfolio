@@ -537,6 +537,20 @@
       transition: color .3s
     }
 
+    .reveal-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.85s;
+      transition-delay: var(--word-delay, 0ms);
+      will-change: transform, opacity;
+    }
+
+    .section-heading.is-visible .reveal-word {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ═══ REVEAL ════════════════════════════════ */
     [data-reveal] {
       opacity: 0;
@@ -5490,6 +5504,50 @@
         obs.unobserve(e.target);
       });
     }, { threshold: .14, rootMargin: '0px 0px -10% 0px' });
+
+    // Split section headers into individual words for staggered reveal animation
+    document.querySelectorAll('.section-heading').forEach(heading => {
+      const nodes = [...heading.childNodes];
+      heading.innerHTML = '';
+      nodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const words = node.textContent.split(/(\s+)/);
+          words.forEach(word => {
+            if (word.trim() === '') {
+              heading.appendChild(document.createTextNode(word));
+            } else {
+              const span = document.createElement('span');
+              span.className = 'reveal-word';
+              span.textContent = word;
+              heading.appendChild(span);
+            }
+          });
+        } else if (node.nodeName === 'EM') {
+          const em = document.createElement('em');
+          const words = node.textContent.split(/(\s+)/);
+          words.forEach(word => {
+            if (word.trim() === '') {
+              em.appendChild(document.createTextNode(word));
+            } else {
+              const span = document.createElement('span');
+              span.className = 'reveal-word';
+              span.textContent = word;
+              em.appendChild(span);
+            }
+          });
+          heading.appendChild(em);
+        } else {
+          heading.appendChild(node.cloneNode(true));
+        }
+      });
+
+      heading.querySelectorAll('.reveal-word').forEach((word, idx) => {
+        word.style.setProperty('--word-delay', `${idx * 55}ms`);
+      });
+
+      heading.removeAttribute('data-reveal');
+      obs.observe(heading);
+    });
 
     document.querySelectorAll('[data-reveal]').forEach(el => {
       const section = el.closest('section');
