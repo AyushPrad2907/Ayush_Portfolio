@@ -53,6 +53,22 @@
       --tech-hover: #1e2030;
     }
 
+    /* ═══ CUSTOM SCROLLBAR ═════════════════════ */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg2);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--mid);
+      border-radius: 5px;
+      border: 2px solid var(--bg2);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
     /* ═══ RESET ════════════════════════════════ */
     *,
     *::before,
