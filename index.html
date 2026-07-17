@@ -5318,7 +5318,11 @@
       }
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(resizeCanvas, 100);
+    });
 
     function initStars() {
       stars = [];
