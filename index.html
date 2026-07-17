@@ -5313,6 +5313,9 @@
     function resizeCanvas() {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
+      if (typeof initStars === 'function') {
+        initStars();
+      }
     }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
