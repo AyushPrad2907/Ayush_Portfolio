@@ -166,6 +166,12 @@
         background .3s
     }
 
+    .magnetic {
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
+    }
+
     /* Hover: diamond morphs into a soft glowing circle */
     .cur-hover #cursor-gem {
       width: 44px;
@@ -5957,6 +5963,30 @@
       avatar.addEventListener('focus', () => avatar.classList.add('is-grayscale'));
       avatar.addEventListener('blur', () => avatar.classList.remove('is-grayscale'));
     }
+
+    // Magnetic Hover Effect
+    (function initMagneticHover() {
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!hasFinePointer || reduceMotion) return;
+
+      const targets = document.querySelectorAll('.nav-center a, .theme-toggle, .btn-resume, .hero-btns .btn, #btt');
+      targets.forEach(el => {
+        el.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+        el.style.willChange = 'transform';
+        
+        el.addEventListener('mousemove', e => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - (rect.width / 2);
+          const y = e.clientY - rect.top - (rect.height / 2);
+          el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = 'translate(0px, 0px)';
+        });
+      });
+    })();
 
   </script>
 </body>
