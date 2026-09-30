@@ -1183,102 +1183,270 @@
       letter-spacing: .14em
     }
 
+    /* ═══ MODERN PROFILE CARD (REFERENCE DESIGN) ═══ */
     .profile-frame {
-      width: min(84vw, 360px);
-      aspect-ratio: 29 / 37;
-      border: 1px solid rgba(255, 255, 255, .14);
+      width: min(88vw, 360px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: relative;
       opacity: 0;
       animation: heroFrameIn 1s .45s cubic-bezier(.4, 0, .2, 1) both;
-      transition: border-color .4s, transform .4s;
+      transition: transform .4s;
       z-index: 2;
-      box-shadow: 0 28px 80px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px)
     }
 
-    .profile-frame::before {
-      content: '';
-      position: absolute;
-      inset: -12px;
-      border-radius: 34px;
-      background: linear-gradient(135deg, rgba(224, 112, 72, .28), rgba(101, 140, 255, .24), rgba(255, 255, 255, .04));
-      filter: blur(18px);
-      opacity: .58;
-      z-index: -1;
-      animation: auroraDrift 16s ease-in-out infinite alternate
-    }
-
-    .profile-avatar {
+    .profile-card {
       width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .08), transparent 28%),
-        linear-gradient(160deg, rgba(221, 212, 196, .84) 0%, rgba(191, 180, 164, .96) 100%);
+      border-radius: 32px;
+      padding: 1.45rem 1.4rem 1.5rem;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 5.5rem;
-      font-weight: 900;
-      color: rgba(245, 240, 232, .85);
-      letter-spacing: -.05em;
+      flex-direction: column;
       position: relative;
       overflow: hidden;
-      border-radius: 0 0 2px 2px
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.09),
+        0 6px 20px rgba(0, 0, 0, 0.04);
+      transition: background .4s, border-color .4s, box-shadow .4s;
     }
 
-    [data-theme="dark"] .profile-avatar {
-      background: linear-gradient(160deg, #1e2234 0%, #151722 100%)
-    }
-
-    .profile-avatar::after {
+    /* Lower card radiant wash - Lime Green in Light Theme */
+    .profile-card::after {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom, transparent 42%, rgba(8, 9, 14, .45)),
-        linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, .08) 22%, transparent 36%);
-      mix-blend-mode: multiply
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent 56%, rgba(190, 242, 100, 0.35) 76%, rgba(163, 230, 53, 0.72) 100%);
+      border-radius: inherit;
+      z-index: 1;
+      transition: background .4s;
     }
 
-    .profile-img {
+    [data-theme="dark"] .profile-card {
+      background: #15151a;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Lower card radiant wash - Cyber Emerald in Dark Theme */
+    [data-theme="dark"] .profile-card::after {
+      background: linear-gradient(to bottom, transparent 54%, rgba(34, 197, 94, 0.12) 75%, rgba(34, 197, 94, 0.42) 100%);
+    }
+
+    /* Top bar */
+    .profile-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+      padding: 0 0.2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-card-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    [data-theme="dark"] .profile-card-status {
+      color: #a1a1aa;
+    }
+
+    .status-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #65a30d;
+      box-shadow: 0 0 0 0 rgba(101, 163, 13, 0.6);
+      animation: statusPulse 2s infinite;
+    }
+
+    [data-theme="dark"] .status-pulse-dot {
+      background: #22c55e;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+    }
+
+    @keyframes statusPulse {
+      0% { box-shadow: 0 0 0 0 rgba(101, 163, 13, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(101, 163, 13, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(101, 163, 13, 0); }
+    }
+
+    .profile-card-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+      color: #71717a;
+    }
+
+    [data-theme="dark"] .profile-card-time {
+      color: #a1a1aa;
+    }
+
+    .profile-card-time svg {
+      opacity: 0.75;
+    }
+
+    /* Photo squircle */
+    .profile-card-photo-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 26px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      z-index: 2;
+    }
+
+    .profile-card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .profile-card:hover .profile-card-img {
+      transform: scale(1.03);
+    }
+
+    /* Identity info */
+    .profile-card-info {
+      text-align: center;
+      margin-top: 1.15rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-card-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #18181b;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    [data-theme="dark"] .profile-card-name {
+      color: #f4f4f5;
+    }
+
+    .profile-card-role {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      color: #71717a;
+      margin: 0.25rem 0 0;
+      font-weight: 400;
+    }
+
+    [data-theme="dark"] .profile-card-role {
+      color: #a1a1aa;
+    }
+
+    /* Action buttons */
+    .profile-card-actions {
+      display: flex;
+      gap: 0.65rem;
+      margin-top: 1.35rem;
+      position: relative;
+      z-index: 3;
+    }
+
+    .card-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.65rem 0.8rem;
+      border-radius: 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: #18181b;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all .25s cubic-bezier(.22, 1, .36, 1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-btn:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] .card-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #f4f4f5;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .card-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    }
+
+    .card-btn .btn-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* Bottom Creativity Tab */
+    .profile-card-creativity-tab {
+      margin-top: -10px;
+      width: 86%;
+      border-radius: 0 0 22px 22px;
+      padding: 0.7rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      background: #9ef01a;
+      color: #0f172a;
+      box-shadow: 0 12px 28px rgba(158, 240, 26, 0.45);
       position: relative;
       z-index: 1;
-      transition: filter .45s cubic-bezier(.2, .9, .2, 1), transform .45s cubic-bezier(.2, .9, .2, 1)
+      transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s;
     }
 
-    .profile-avatar:hover .profile-img,
-    .profile-avatar.is-grayscale .profile-img {
-      filter: grayscale(100%) contrast(95%);
-      transform: scale(1.02)
+    .profile-frame:hover .profile-card-creativity-tab {
+      transform: translateY(3px);
+      box-shadow: 0 16px 36px rgba(158, 240, 26, 0.55);
     }
 
-    .profile-avatar .profile-img {
-      will-change: filter, transform
+    [data-theme="dark"] .profile-card-creativity-tab {
+      background: #22c55e;
+      color: #052e16;
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.38);
     }
 
-    .profile-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(180deg, rgba(8, 9, 14, .02), rgba(8, 9, 14, .88));
-      color: var(--bg);
-      padding: .95rem 1.15rem;
-      font-family: 'Fira Code', monospace;
-      font-size: .62rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, .06);
-      backdrop-filter: blur(10px)
+    [data-theme="dark"] .profile-frame:hover .profile-card-creativity-tab {
+      box-shadow: 0 16px 40px rgba(34, 197, 94, 0.5);
     }
 
     .profile-tag-stack {
@@ -3894,12 +4062,56 @@
         </div>
         <div class="hero-metric hero-metric-pride"><strong>SIH '25</strong><span>Finalist</span></div>
         <div class="profile-frame">
-          <div class="profile-corner tl"></div>
-          <div class="profile-corner tr"></div>
-          <div class="profile-corner bl"></div>
-          <div class="profile-corner br"></div>
-          <div class="profile-avatar"><img src="assets/ayush.jpg" alt="Ayush Pradhan — Full Stack Developer from Bhubaneswar" class="profile-img" width="290" height="370" loading="lazy" decoding="async"></div>
-          <div class="profile-label"><span>Ayush Pradhan</span><span>Bhubaneswar ↗</span></div>
+          <div class="profile-card">
+            <!-- Header status & clock -->
+            <div class="profile-card-header">
+              <div class="profile-card-status">
+                <span class="status-pulse-dot"></span>
+                <span>Available for work</span>
+              </div>
+              <div class="profile-card-time">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span id="profile-card-clock">1:35PM</span>
+              </div>
+            </div>
+
+            <!-- Profile photo squircle -->
+            <div class="profile-card-photo-wrap">
+              <img src="assets/ayush.jpg" alt="Ayush Pradhan - Full Stack & AI Developer" class="profile-card-img" width="300" height="300" loading="eager" decoding="async">
+            </div>
+
+            <!-- Profile info -->
+            <div class="profile-card-info">
+              <h2 class="profile-card-name">Ayush Pradhan</h2>
+              <p class="profile-card-role">Developer</p>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="profile-card-actions">
+              <a href="#contact" class="card-btn">
+                <span class="btn-icon">+</span>
+                <span>Hire Me</span>
+              </a>
+              <button type="button" class="card-btn" id="profile-copy-email-btn" title="Copy Email">
+                <svg class="btn-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copy-email-label">Copy Email</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom floating creativity tab -->
+          <div class="profile-card-creativity-tab">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span>Currently High on Creativity</span>
+          </div>
         </div>
       </div>
     </div>
@@ -5878,6 +6090,40 @@
     const contactForm = document.getElementById('contact-form');
     if (contactForm) contactForm.addEventListener('submit', handleForm);
     /* ═════════════════════════════════════════════════════════╝ */
+
+    /* ═══ PROFILE CARD ACTIONS & CLOCK ══════════════════ */
+    function updateProfileCardClock() {
+      const el = document.getElementById('profile-card-clock');
+      if (!el) return;
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      el.textContent = `${hours}:${minutes}${ampm}`;
+    }
+    updateProfileCardClock();
+    setInterval(updateProfileCardClock, 30000);
+
+    const profileCopyBtn = document.getElementById('profile-copy-email-btn');
+    if (profileCopyBtn) {
+      profileCopyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('ayushpradhan2949@gmail.com').then(() => {
+          const label = document.getElementById('copy-email-label');
+          if (label) {
+            const orig = label.textContent;
+            label.textContent = 'Copied! ✓';
+            profileCopyBtn.style.borderColor = 'var(--accent, #65a30d)';
+            setTimeout(() => {
+              label.textContent = orig;
+              profileCopyBtn.style.borderColor = '';
+            }, 2000);
+          }
+        }).catch(() => {
+          window.location.href = 'mailto:ayushpradhan2949@gmail.com';
+        });
+      });
+    }
 
     /* ═══ BURST PARTICLE EFFECT ════════════════════════ */
     function createBurstParticles(x, y) {
