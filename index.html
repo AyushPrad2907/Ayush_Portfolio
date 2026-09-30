@@ -3161,13 +3161,20 @@
       align-items: center;
       justify-content: center;
       background: var(--bg);
-      transition: opacity .32s cubic-bezier(.4, 0, .2, 1), visibility .32s;
+      transition: opacity .3s cubic-bezier(.4, 0, .2, 1), visibility .3s;
+      animation: autoDismissLoader .32s .32s cubic-bezier(.4, 0, .2, 1) forwards;
     }
 
     #loader-screen.loader-done {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    @keyframes autoDismissLoader {
+      0% { opacity: 1; visibility: visible; }
+      99% { opacity: 0; visibility: visible; }
+      100% { opacity: 0; visibility: hidden; pointer-events: none; }
     }
 
     .loader-content {
@@ -3748,7 +3755,7 @@
   </style>
 </head>
 
-<body class="is-loading">
+<body>
 
   <div id="reading-progress" aria-hidden="true">
     <div class="reading-progress__bar"></div>
@@ -3763,6 +3770,15 @@
       </div>
     </div>
   </div>
+  <script>
+    setTimeout(function() {
+      var l = document.getElementById('loader-screen');
+      if (l) {
+        l.classList.add('loader-done');
+        setTimeout(function() { l.remove(); }, 350);
+      }
+    }, 320);
+  </script>
 
   <canvas id="star-canvas" aria-hidden="true"></canvas>
   <div id="cursor-spotlight" aria-hidden="true"></div>
@@ -5659,6 +5675,7 @@
           row.style.setProperty('--ty', '0px');
           row.style.setProperty('--mx', '50%');
           row.style.setProperty('--my', '50%');
+        });
       });
     }
 
