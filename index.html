@@ -1703,127 +1703,178 @@
       border-color: var(--accent)
     }
 
-    .project-row {
-      --rx: 0deg;
-      --ry: 0deg;
-      --tx: 0px;
-      --ty: 0px;
-      --mx: 50%;
-      --my: 50%;
+    /* -- Card Grid -- */
+    .project-grid {
       display: grid;
-      grid-template-columns: 54px 1fr auto;
-      align-items: start;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--line);
-      cursor: pointer;
-      position: relative;
-      transform-style: preserve-3d;
-      transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0);
-      transition: padding-left .3s, border-color .4s, opacity .4s,
-        transform .45s cubic-bezier(.22, 1, .36, 1), box-shadow .45s cubic-bezier(.22, 1, .36, 1)
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem
     }
 
-    .project-row.hidden {
+    .project-card {
+      --rx: 0deg;
+      --ry: 0deg;
+      --mx: 50%;
+      --my: 50%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding: 1.9rem;
+      border-radius: 18px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+      transition:
+        transform .5s cubic-bezier(.22, 1, .36, 1),
+        box-shadow .5s cubic-bezier(.22, 1, .36, 1),
+        border-color .35s;
+      isolation: isolate;
+      box-shadow:
+        0 2px 4px rgba(26, 23, 20, .03),
+        0 10px 28px rgba(26, 23, 20, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .75);
+    }
+
+    [data-theme="dark"] .project-card {
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01)),
+        var(--bg2);
+      border-color: rgba(240, 235, 224, .08);
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, .35),
+        0 14px 38px rgba(0, 0, 0, .28),
+        inset 0 1px 0 rgba(255, 255, 255, .08);
+    }
+
+    .project-card.hidden {
       opacity: 0;
-      transform: translateY(8px);
       pointer-events: none;
       display: none
     }
 
-    .project-row::before {
+    /* Accent bar - slides edge-to-edge on hover */
+    .project-card::before {
       content: '';
       position: absolute;
-      left: -3rem;
-      right: -3rem;
       top: 0;
-      bottom: 0;
-      background: var(--bg2);
+      left: 2rem;
+      right: 2rem;
+      height: 2px;
+      border-radius: 0 0 4px 4px;
+      background: var(--accent);
       opacity: 0;
-      z-index: -1;
-      transition: opacity .3s
+      transition: opacity .35s, left .4s cubic-bezier(.22, 1, .36, 1), right .4s cubic-bezier(.22, 1, .36, 1)
     }
 
-    .project-row::after {
+    /* Specular gloss - tracks cursor position */
+    .project-card::after {
       content: '';
       position: absolute;
       inset: 0;
+      border-radius: inherit;
       pointer-events: none;
-      background: 
-        radial-gradient(circle at var(--mx) var(--my), rgba(224, 112, 72, .22) 0%, transparent 50%),
-        linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, .08) var(--gloss-pos, 50%), transparent 100%);
+      background:
+        radial-gradient(circle 300px at var(--mx) var(--my), rgba(224, 112, 72, .16) 0%, transparent 65%),
+        linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, .07) 45%, transparent 70%);
       opacity: 0;
       mix-blend-mode: overlay;
-      transition: opacity .35s cubic-bezier(.22, 1, .36, 1)
+      transition: opacity .4s cubic-bezier(.22, 1, .36, 1);
+      z-index: 2
     }
 
-    .project-row:hover {
-      padding-left: .5rem;
-      transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), calc(var(--ty) - 8px), 0);
-      box-shadow: 0 12px 32px rgba(192, 82, 42, .15)
+    .project-card:hover {
+      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-9px);
+      border-color: rgba(224, 112, 72, .3);
+      box-shadow:
+        0 4px 12px rgba(26, 23, 20, .04),
+        0 20px 48px rgba(26, 23, 20, .08),
+        0 14px 36px rgba(192, 82, 42, .12),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
     }
 
-    .project-row:hover::before {
+    [data-theme="dark"] .project-card:hover {
+      border-color: rgba(224, 112, 72, .35);
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, .4),
+        0 26px 56px rgba(0, 0, 0, .55),
+        0 16px 40px rgba(224, 112, 72, .16),
+        inset 0 1px 0 rgba(255, 255, 255, .14);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+      left: 0;
+      right: 0
+    }
+
+    .project-card:hover::after {
       opacity: 1
     }
 
-    .project-row:hover::after,
-    .project-row:focus-within::after {
-      opacity: 1
-    }
-
-    .project-num,
-    .project-content,
-    .project-arrow {
-      transform: translateZ(16px);
+    /* Card inner layout */
+    .project-card .project-num {
+      font-family: 'Fira Code', monospace;
+      font-size: .62rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      position: absolute;
+      top: 1.6rem;
+      right: 1.6rem;
+      transform: translateZ(20px);
       transition: transform .4s cubic-bezier(.22, 1, .36, 1)
     }
 
-    .project-row:hover .project-content,
-    .project-row:hover .project-arrow,
-    .project-row:hover .project-num {
-      transform: translateZ(26px)
-    }
-
-    .project-num {
-      font-family: 'Fira Code', monospace;
-      font-size: .63rem;
-      color: var(--muted);
-      letter-spacing: .08em;
-      padding-top: .2rem
+    .project-card .project-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1
     }
 
     .project-emoji-big {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-bottom: .5rem;
-      display: block
+      display: block;
+      transform: translateZ(28px);
+      transition: transform .5s cubic-bezier(.22, 1, .36, 1)
+    }
+
+    .project-card:hover .project-emoji-big {
+      transform: translateZ(46px) scale(1.06)
     }
 
     .project-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 700;
       letter-spacing: -.02em;
-      margin-bottom: .4rem;
-      transition: color .2s
+      margin-bottom: .35rem;
+      color: var(--ink);
+      transform: translateZ(22px);
+      transition: color .25s, transform .4s cubic-bezier(.22, 1, .36, 1)
     }
 
-    .project-row:hover .project-name {
-      color: var(--accent)
+    .project-card:hover .project-name {
+      color: var(--accent);
+      transform: translateZ(34px)
     }
 
     .project-desc {
-      font-size: .84rem;
+      font-size: .82rem;
       color: var(--mid);
       line-height: 1.65;
-      max-width: 500px
+      transform: translateZ(14px);
+      transition: transform .4s cubic-bezier(.22, 1, .36, 1)
     }
+
 
     .project-chips {
       display: flex;
       flex-wrap: wrap;
       gap: .4rem;
-      margin-top: .8rem
+      margin-top: auto;
+      padding-top: 1.3rem;
+      transform: translateZ(12px)
     }
 
     .chip {
@@ -1905,16 +1956,39 @@
       border: 1px solid rgba(234, 179, 8, .2)
     }
 
-    .project-arrow {
-      font-size: 1.2rem;
-      color: var(--line);
-      transition: all .3s;
-      align-self: center
+    .project-card .project-arrow {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .92rem;
+      color: var(--mid);
+      text-decoration: none;
+      align-self: flex-end;
+      margin-top: 1rem;
+      transition: all .35s cubic-bezier(.22, 1, .36, 1);
+      transform: translateZ(20px);
+      z-index: 3;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
     }
 
-    .project-row:hover .project-arrow {
-      color: var(--accent);
-      transform: translate(4px, -4px)
+    [data-theme="dark"] .project-card .project-arrow {
+      background: var(--bg3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+    }
+
+    .project-card:hover .project-arrow {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateZ(32px) translate(2px, -2px);
+      box-shadow: 0 6px 18px rgba(224, 112, 72, .4);
     }
 
     /* ═══ ACHIEVEMENTS ══════════════════════════ */
@@ -3078,249 +3152,75 @@
       }
     }
 
-    /* ═══ LOADER ════════════════════════════════ */
+    /* ═══ FAST MICRO-LOADER (SHORT MS) ═════════ */
     #loader-screen {
       position: fixed;
       inset: 0;
       z-index: 10000;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: var(--bg);
-      transition: background .4s;
+      transition: opacity .32s cubic-bezier(.4, 0, .2, 1), visibility .32s;
     }
 
     #loader-screen.loader-done {
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
     }
 
-    /* Top & bottom curtains */
-    .loader-curtain {
-      position: fixed;
-      left: 0;
-      right: 0;
-      height: 50vh;
-      z-index: 10001;
-      background: var(--bg);
-      transition: transform .7s cubic-bezier(.77, 0, .18, 1), background .4s;
-    }
-
-    .loader-curtain--top {
-      top: 0
-    }
-
-    .loader-curtain--bot {
-      bottom: 0
-    }
-
-    .loader-done .loader-curtain--top {
-      transform: translateY(-100%)
-    }
-
-    .loader-done .loader-curtain--bot {
-      transform: translateY(100%)
-    }
-
-    /* Center content wrapper */
-    .loader-center {
-      position: fixed;
-      inset: 0;
-      z-index: 10002;
+    .loader-content {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      pointer-events: none;
+      gap: 1.1rem;
+      animation: loaderPop .28s cubic-bezier(.16, 1, .3, 1) both;
     }
 
-    /* Terminal line */
-    .loader-terminal {
-      font-family: 'Fira Code', monospace;
-      font-size: clamp(.7rem, 1.4vw, .85rem);
-      color: var(--accent);
-      letter-spacing: .06em;
-      opacity: 0;
-      transform: translateY(8px);
-      animation: loaderFadeUp .5s .2s ease both;
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-    }
-
-    .loader-terminal .lt-prompt {
-      color: var(--muted);
-    }
-
-    .loader-terminal .lt-cmd {
-      color: var(--accent);
-    }
-
-    .loader-terminal .lt-cursor {
-      display: inline-block;
-      width: 8px;
-      height: 1.1em;
-      background: var(--accent);
-      border-radius: 1px;
-      animation: blink .6s step-end infinite;
-    }
-
-    /* Progress track */
-    .loader-progress {
-      width: clamp(200px, 40vw, 320px);
-      height: 3px;
-      background: var(--line);
-      border-radius: 2px;
-      margin-top: 1.4rem;
-      overflow: hidden;
-      opacity: 0;
-      animation: loaderFadeUp .4s .5s ease both;
-    }
-
-    .loader-progress-bar {
-      height: 100%;
-      width: 0;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      animation: loaderFill 1.6s .6s cubic-bezier(.4, 0, .2, 1) forwards;
-    }
-
-    /* Name reveal */
-    .loader-name {
+    .loader-brand {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
       font-weight: 900;
-      letter-spacing: -.04em;
-      line-height: 1;
+      letter-spacing: -.03em;
       color: var(--ink);
-      margin-top: 2rem;
+    }
+
+    .loader-brand em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .loader-bar-wrap {
+      width: 130px;
+      height: 2px;
+      background: var(--line);
+      border-radius: 99px;
       overflow: hidden;
       position: relative;
-      opacity: 0;
     }
 
-    .loader-name em {
-      font-style: italic;
-      color: var(--accent)
+    .loader-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 99px;
+      animation: fastLoad .32s cubic-bezier(.22, 1, .36, 1) forwards;
     }
 
-    .loader-name.ln-reveal {
-      opacity: 1;
-      animation: loaderNameIn .6s cubic-bezier(.4, 0, .2, 1) both;
+    @keyframes fastLoad {
+      0% { width: 0%; }
+      55% { width: 70%; }
+      100% { width: 100%; }
     }
 
-    /* Decorative corner brackets */
-    .loader-bracket {
-      position: fixed;
-      width: 28px;
-      height: 28px;
-      border-color: var(--accent);
-      border-style: solid;
-      z-index: 10003;
-      opacity: 0;
-      animation: loaderFadeUp .4s .3s ease both;
-      transition: opacity .5s, transform .5s;
-    }
-
-    .loader-bracket.lb-tl {
-      top: 10%;
-      left: 10%;
-      border-width: 2px 0 0 2px
-    }
-
-    .loader-bracket.lb-tr {
-      top: 10%;
-      right: 10%;
-      border-width: 2px 2px 0 0
-    }
-
-    .loader-bracket.lb-bl {
-      bottom: 10%;
-      left: 10%;
-      border-width: 0 0 2px 2px
-    }
-
-    .loader-bracket.lb-br {
-      bottom: 10%;
-      right: 10%;
-      border-width: 0 2px 2px 0
-    }
-
-    .loader-done .loader-bracket {
-      opacity: 0 !important;
-      transform: scale(1.5)
-    }
-
-    /* Percentage counter */
-    .loader-pct {
-      font-family: 'Fira Code', monospace;
-      font-size: clamp(.6rem, 1vw, .72rem);
-      color: var(--muted);
-      letter-spacing: .1em;
-      margin-top: .6rem;
-      opacity: 0;
-      animation: loaderFadeUp .3s .7s ease both;
-    }
-
-    /* Fade out center */
-    .loader-done .loader-center {
-      animation: loaderCenterOut .4s .05s ease forwards
-    }
-
-    @keyframes loaderFadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(8px)
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0)
-      }
-    }
-
-    @keyframes loaderFill {
-      0% {
-        width: 0
-      }
-
-      40% {
-        width: 55%
-      }
-
-      70% {
-        width: 78%
-      }
-
-      100% {
-        width: 100%
-      }
-    }
-
-    @keyframes loaderNameIn {
-      0% {
-        opacity: 0;
-        transform: translateY(30px) scale(.92);
-        filter: blur(8px)
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0)
-      }
-    }
-
-    @keyframes loaderCenterOut {
-      to {
-        opacity: 0;
-        transform: scale(.95);
-        filter: blur(6px)
-      }
+    @keyframes loaderPop {
+      from { opacity: 0; transform: scale(.96) translateY(6px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     body.is-loading {
-      overflow: hidden !important
+      overflow: hidden !important;
     }
 
     /* ═══ RESPONSIVE ════════════════════════════ */
@@ -3425,9 +3325,13 @@
         align-items: flex-start
       }
 
-      .project-row {
-        grid-template-columns: 40px 1fr auto;
+      .project-grid {
+        grid-template-columns: 1fr 1fr;
         gap: 1rem
+      }
+
+      .project-card {
+        border-radius: 12px
       }
 
       .ach-grid {
@@ -3486,6 +3390,15 @@
     }
 
     @media(max-width:600px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .project-card {
+        padding: 1.5rem;
+      }
+
       #reading-progress {
         height: 3px
       }
@@ -3635,7 +3548,7 @@
     /* On fine-pointer devices, re-apply cursor:none override for all interactive elements */
     @media (hover: hover) and (pointer: fine) {
       .btn, .btn-resume, .nav-center a, .theme-toggle,
-      .pf-btn, .project-row, .testi-dot, .btn-many-more,
+      .pf-btn, .project-card, .testi-dot, .btn-many-more,
       .f-btn, .tech-cell, .contact-link-row, #btt,
       .cert-card, .ach-item, .menu-toggle, .menu-close, .mobile-menu-links a {
         cursor: none
@@ -3648,12 +3561,12 @@
         filter: none
       }
 
-      .project-row {
+      .project-card {
         transform: none !important;
         transition: none
       }
 
-      .project-row::after {
+      .project-card::after {
         display: none
       }
 
@@ -3841,25 +3754,13 @@
     <div class="reading-progress__bar"></div>
   </div>
 
-  <!-- ═══ LOADER ═════════════════════════════════════════ -->
+  <!-- ═══ LOADER (FAST MICRO-LOADER) ══════════════ -->
   <div id="loader-screen">
-    <div class="loader-curtain loader-curtain--top"></div>
-    <div class="loader-curtain loader-curtain--bot"></div>
-    <div class="loader-bracket lb-tl"></div>
-    <div class="loader-bracket lb-tr"></div>
-    <div class="loader-bracket lb-bl"></div>
-    <div class="loader-bracket lb-br"></div>
-    <div class="loader-center">
-      <div class="loader-terminal">
-        <span class="lt-prompt">$</span>
-        <span class="lt-cmd" id="loader-cmd"></span>
-        <span class="lt-cursor"></span>
+    <div class="loader-content">
+      <div class="loader-brand">Ayush<em>.</em></div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar"></div>
       </div>
-      <div class="loader-progress">
-        <div class="loader-progress-bar"></div>
-      </div>
-      <div class="loader-pct" id="loader-pct">0%</div>
-      <div class="loader-name" id="loader-name">Ayush<em>.</em></div>
     </div>
   </div>
 
@@ -4585,9 +4486,9 @@
         <button class="pf-btn" data-filter="networking" aria-pressed="false">Networking</button>
       </div>
 
-      <div class="project-list">
+      <div class="project-grid">
 
-        <div class="project-row" data-reveal="up" data-cat="ai web">
+        <div class="project-card" data-reveal="up" data-cat="ai web">
           <div class="project-num">01</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · NLP</span>
@@ -4602,7 +4503,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="cv web">
+        <div class="project-card" data-reveal="up" data-cat="cv web">
           <div class="project-num">02</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-cv">Computer Vision</span>
@@ -4617,7 +4518,7 @@
             class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web">
+        <div class="project-card" data-reveal="up" data-cat="web">
           <div class="project-num">03</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-web">Web</span>
@@ -4632,7 +4533,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="ai python">
+        <div class="project-card" data-reveal="up" data-cat="ai python">
           <div class="project-num">04</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · Predictive</span>
@@ -4647,7 +4548,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="ai web">
+        <div class="project-card" data-reveal="up" data-cat="ai web">
           <div class="project-num">05</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · APIs</span>
@@ -4662,7 +4563,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web">
+        <div class="project-card" data-reveal="up" data-cat="web">
           <div class="project-num">06</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-web">Web · Full-Stack</span>
@@ -4676,7 +4577,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="ai web">
+        <div class="project-card" data-reveal="up" data-cat="ai web">
           <div class="project-num">07</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · NLP</span>
@@ -4691,7 +4592,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web">
+        <div class="project-card" data-reveal="up" data-cat="web">
           <div class="project-num">08</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-web">Web · Audio</span>
@@ -4705,7 +4606,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="ai python">
+        <div class="project-card" data-reveal="up" data-cat="ai python">
           <div class="project-num">09</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · ML</span>
@@ -4720,7 +4621,7 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web">
+        <div class="project-card" data-reveal="up" data-cat="web">
           <div class="project-num">10</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-web">Web · API Integration</span>
@@ -4734,7 +4635,7 @@
           <a href="https://user-directory-henna.vercel.app/" target="_blank" class="project-arrow" title="View Live Site">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="cyber python web">
+        <div class="project-card" data-reveal="up" data-cat="cyber python web">
           <div class="project-num">11</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-cyber">Cyber Security · Python</span>
@@ -4746,7 +4647,7 @@
           <a href="https://github.com/AyushPrad2907/WebSentinel-AI" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="java">
+        <div class="project-card" data-reveal="up" data-cat="java">
           <div class="project-num">12</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-java">Java · CLI</span>
@@ -4758,7 +4659,7 @@
           <a href="https://github.com/AyushPrad2907/Personal-Expense-Tracker" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="ai cv python">
+        <div class="project-card" data-reveal="up" data-cat="ai cv python">
           <div class="project-num">13</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · Computer Vision</span>
@@ -4770,7 +4671,7 @@
           <a href="https://github.com/AyushPrad2907/Crowd-Management-and-Stampede-protection" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="ai python">
+        <div class="project-card" data-reveal="up" data-cat="ai python">
           <div class="project-num">14</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · Satellite Data</span>
@@ -4782,7 +4683,7 @@
           <a href="https://github.com/AyushPrad2907/AI-Based-Detection-and-Classification-of-Industrial-Fires-and-Persistent-Thermal-Sources" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web fullstack">
+        <div class="project-card" data-reveal="up" data-cat="web fullstack">
           <div class="project-num">15</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-fullstack">Full-Stack · EdTech</span>
@@ -4794,7 +4695,7 @@
           <a href="https://github.com/AyushPrad2907/LMS" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web fullstack">
+        <div class="project-card" data-reveal="up" data-cat="web fullstack">
           <div class="project-num">16</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-fullstack">Full-Stack · Enterprise</span>
@@ -4806,7 +4707,7 @@
           <a href="https://github.com/AyushPrad2907/HRMS-" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web">
+        <div class="project-card" data-reveal="up" data-cat="web">
           <div class="project-num">17</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-web">Web · Real-Time</span>
@@ -4818,7 +4719,7 @@
           <a href="https://github.com/AyushPrad2907/realtime_news" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web cyber">
+        <div class="project-card" data-reveal="up" data-cat="web cyber">
           <div class="project-num">18</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-cyber">Security · Creative UI</span>
@@ -4830,7 +4731,7 @@
           <a href="https://github.com/AyushPrad2907/Password-Generator" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="python networking">
+        <div class="project-card" data-reveal="up" data-cat="python networking">
           <div class="project-num">19</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-networking">Networking · Python</span>
@@ -4842,7 +4743,7 @@
           <a href="https://github.com/AyushPrad2907/Terminal-Chat-Based-on-" target="_blank" class="project-arrow" title="View Repository">↗</a>
         </div>
 
-        <div class="project-row" data-reveal="up" data-cat="web oss">
+        <div class="project-card" data-reveal="up" data-cat="web oss">
           <div class="project-num">20</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-oss">Open Source · CSS</span>
@@ -5393,50 +5294,25 @@
   <a href="#" id="btt">↑</a>
 
   <script>
-    /* ═══ LOADER ANIMATION (OPTIMIZED & SESSION-AWARE) ════════ */
+    /* ═══ FAST MICRO-LOADER (SHORT MS) ══════════════════ */
     (function () {
       const screen = document.getElementById('loader-screen');
       if (!screen) return;
-      const cmdEl = document.getElementById('loader-cmd');
-      const pctEl = document.getElementById('loader-pct');
-      const nameEl = document.getElementById('loader-name');
-      const phrase = 'initializing portfolio...';
-      const hasVisited = sessionStorage.getItem('visited_ayush_pf');
 
-      if (hasVisited) {
-        // Instant graceful fade for returning visits in same session
+      const dismiss = () => {
+        if (screen.classList.contains('loader-done')) return;
         screen.classList.add('loader-done');
         document.body.classList.remove('is-loading');
-        setTimeout(() => screen.remove(), 400);
-        return;
-      }
+        setTimeout(() => screen.remove(), 350);
+      };
 
-      sessionStorage.setItem('visited_ayush_pf', '1');
-      let ci = 0;
-      function typeCmd() {
-        if (ci <= phrase.length) {
-          if (cmdEl) cmdEl.textContent = phrase.slice(0, ci);
-          ci += 2;
-          setTimeout(typeCmd, 20);
-        }
+      // Rapid reveal in ~320ms for a crisp, snappy first impression
+      if (document.readyState === 'complete') {
+        setTimeout(dismiss, 300);
+      } else {
+        window.addEventListener('load', () => setTimeout(dismiss, 300));
+        setTimeout(dismiss, 420); // strict safety fallback
       }
-      typeCmd();
-
-      let pct = 0;
-      const pctTimer = setInterval(() => {
-        pct += Math.floor(Math.random() * 15) + 10;
-        if (pct > 100) pct = 100;
-        if (pctEl) pctEl.textContent = pct + '%';
-        if (pct >= 100) {
-          clearInterval(pctTimer);
-          if (nameEl) nameEl.classList.add('ln-reveal');
-          setTimeout(() => {
-            screen.classList.add('loader-done');
-            document.body.classList.remove('is-loading');
-            setTimeout(() => screen.remove(), 450);
-          }, 200);
-        }
-      }, 30);
     })();
 
     /* ═══ STARFIELD ═════════════════════════════════════ */
@@ -5586,7 +5462,7 @@
       });
 
       // Hover interactions
-      const hoverEls = 'a,button,.tag,.tech-cell,.project-row,.ach-item,.btn,.pf-btn,.badge-glass,.contact-link-row,.f-btn,.btn-resume,.project-arrow';
+      const hoverEls = 'a,button,.tag,.tech-cell,.project-card,.ach-item,.btn,.pf-btn,.badge-glass,.contact-link-row,.f-btn,.btn-resume,.project-arrow';
       function bindHover(el) {
         if (el._cursorBound) return;
         el._cursorBound = true;
@@ -5737,7 +5613,7 @@
         btn.classList.add('active');
         btn.setAttribute('aria-pressed', 'true');
         const filter = btn.getAttribute('data-filter');
-        document.querySelectorAll('.project-row').forEach(row => {
+        document.querySelectorAll('.project-card').forEach(row => {
           const cats = row.getAttribute('data-cat') || '';
           if (filter === 'all' || cats.includes(filter)) {
             row.classList.remove('hidden');
@@ -5755,16 +5631,16 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (canHover && !reduceMotion) {
-      document.querySelectorAll('.project-row').forEach(row => {
+      document.querySelectorAll('.project-card').forEach(row => {
         row.addEventListener('mousemove', e => {
           const rect = row.getBoundingClientRect();
           const px = (e.clientX - rect.left) / rect.width;
           const py = (e.clientY - rect.top) / rect.height;
 
-          const rx = ((0.5 - py) * 6).toFixed(2);
-          const ry = ((px - 0.5) * 8).toFixed(2);
-          const tx = ((px - 0.5) * 3).toFixed(2);
-          const ty = ((py - 0.5) * -2.4).toFixed(2);
+          const rx = ((0.5 - py) * 3.5).toFixed(2);
+          const ry = ((px - 0.5) * 5).toFixed(2);
+          const tx = 0;
+          const ty = 0;
           const glossPos = ((px * 40) + 30).toFixed(1);
 
           row.style.setProperty('--rx', `${rx}deg`);
@@ -5783,9 +5659,23 @@
           row.style.setProperty('--ty', '0px');
           row.style.setProperty('--mx', '50%');
           row.style.setProperty('--my', '50%');
-        });
       });
     }
+
+    // Card-level click delegation
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', e => {
+        if (e.target.closest('a')) return;
+        const link = card.querySelector('.project-arrow');
+        if (link && link.href) {
+          if (link.target === '_blank') {
+            window.open(link.href, '_blank', 'noopener,noreferrer');
+          } else {
+            window.location.href = link.href;
+          }
+        }
+      });
+    });
 
     /* ═══ COUNT UP ══════════════════════════════════════ */
     const statObs = new IntersectionObserver(entries => {
@@ -6199,23 +6089,26 @@
         });
       });
 
-      // Staggered reveal for project rows with spring physics
-      gsap.utils.toArray('.project-row').forEach((row, i) => {
-        gsap.fromTo(row, 
-          { opacity: 0, y: 30 },
+      // Card grid entrance - staggered cascade
+      var projectCards = gsap.utils.toArray('.project-card');
+      if (projectCards.length) {
+        gsap.fromTo(projectCards,
+          { opacity: 0, y: 40, scale: 0.96 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
+            scale: 1,
+            duration: 0.65,
+            stagger: 0.07,
             ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
             scrollTrigger: {
-              trigger: row,
-              start: 'top 92%',
+              trigger: '.project-grid',
+              start: 'top 85%',
               toggleActions: 'play none none none'
             }
           }
         );
-      });
+      }
     }
 
     window.addEventListener('load', () => {
@@ -6235,3 +6128,4 @@
 </body>
 
 </html>
+
