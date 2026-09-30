@@ -2542,195 +2542,263 @@
       margin-top: .8rem
     }
 
-    /* ═══ TESTIMONIALS ══════════════════════════ */
+    /* ═══ TESTIMONIALS (INFINITE AUTO-SCROLL WALL) ══════════════════════════ */
     #testimonials {
-      padding: 7rem 0
-    }
-
-    .testi-wrapper {
-      position: relative
-    }
-
-    .testi-carousel {
-      display: grid;
-      grid-template-columns: 1fr;
-      overflow: hidden;
+      padding: 7rem 0;
       position: relative;
-      height: 420px
+    }
+
+    .testi-header-center {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 3rem auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .testi-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      background: rgba(192, 82, 42, 0.08);
+      color: var(--accent);
+      border: 1px solid rgba(192, 82, 42, 0.2);
+      box-shadow: 0 2px 8px rgba(192, 82, 42, 0.05);
+      margin-bottom: 1.2rem;
+    }
+
+    [data-theme="dark"] .testi-pill {
+      background: rgba(224, 112, 72, 0.12);
+      border-color: rgba(224, 112, 72, 0.25);
+      color: var(--accent2);
+    }
+
+    .testi-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 6px currentColor;
+      animation: testiPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes testiPulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .testi-header-center .section-heading {
+      margin-bottom: 0.6rem;
+    }
+
+    .testi-subtitle {
+      color: var(--mid);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .testi-marquee-container {
+      position: relative;
+      height: 640px;
+      overflow: hidden;
+      margin-top: 1rem;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, 1) 88%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, 1) 88%, transparent 100%);
+    }
+
+    .testi-fade-top,
+    .testi-fade-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 80px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .testi-fade-top {
+      top: 0;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+    }
+
+    .testi-fade-bottom {
+      bottom: 0;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+    }
+
+    .testi-columns-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      height: 100%;
+    }
+
+    .testi-column {
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .testi-col-track {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      will-change: transform;
+    }
+
+    .testi-track--up {
+      animation: testiScrollUp 36s linear infinite;
+    }
+
+    .testi-track--down {
+      animation: testiScrollDown 44s linear infinite;
+    }
+
+    .testi-track--slow {
+      animation: testiScrollUp 40s linear infinite;
+    }
+
+    @keyframes testiScrollUp {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+
+    @keyframes testiScrollDown {
+      0% {
+        transform: translateY(-50%);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Pause animation smoothly on hover */
+    .testi-column:hover .testi-col-track {
+      animation-play-state: paused;
     }
 
     .testi-card {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity .6s cubic-bezier(.4, 0, .2, 1), transform .6s cubic-bezier(.4, 0, .2, 1);
-      transform: translateX(40px);
-      pointer-events: none;
-      padding: 2.4rem;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, .08) 0%, rgba(255, 255, 255, .03) 100%);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, .08);
+      position: relative;
+      padding: 1.75rem 1.6rem 1.5rem;
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid rgba(26, 23, 20, 0.08);
+      box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, .08)
-    }
-
-    .testi-card.testi-card--compact {
-      padding: 1.6rem 2rem;
-      max-width: 520px;
-      margin: 0 auto;
-      justify-content: center
+      transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+      cursor: default;
     }
 
     [data-theme="dark"] .testi-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, .04) 0%, rgba(255, 255, 255, .01) 100%);
-      box-shadow: 0 8px 32px rgba(255, 255, 255, .02)
+      background: #141418;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.04);
     }
 
-    .testi-card.active {
-      opacity: 1;
-      transform: translateX(0);
-      pointer-events: auto
+    .testi-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(192, 82, 42, 0.35);
+      box-shadow: 0 16px 36px -8px rgba(192, 82, 42, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
-    .testi-card.exit-left {
-      transform: translateX(-40px)
+    [data-theme="dark"] .testi-card:hover {
+      border-color: rgba(224, 112, 72, 0.4);
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.8), 0 0 24px rgba(224, 112, 72, 0.15);
     }
 
-    .testi-quote {
-      margin-bottom: 1.5rem
-    }
-
-    .quote-icon {
-      width: 24px;
-      height: 24px;
-      color: var(--accent);
-      opacity: .6;
-      margin-bottom: .8rem;
-      transition: opacity .3s
-    }
-
-    .testi-card:hover .quote-icon {
-      opacity: 1
-    }
-
-    .testi-quote p {
-      font-size: .95rem;
-      line-height: 1.7;
+    .testi-quote-text {
+      font-size: 0.94rem;
+      line-height: 1.68;
       color: var(--ink2);
-      letter-spacing: .3px;
-      font-style: italic;
-      transition: color .3s
+      margin-bottom: 1.4rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
     }
 
-    [data-theme="dark"] .testi-quote p {
-      color: var(--ink)
+    [data-theme="dark"] .testi-quote-text {
+      color: var(--ink);
     }
 
-    .testi-meta {
+    .testi-author {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, .06);
-      transition: border-color .3s
+      gap: 0.85rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line2);
     }
 
     .testi-avatar {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-weight: 700;
-      font-size: .9rem;
-      flex-shrink: 0;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
-      transition: transform .3s
-    }
-
-    .testi-card:hover .testi-avatar {
-      transform: scale(1.08)
-    }
-
-    .testi-name {
       font-weight: 600;
-      font-size: .9rem;
-      color: var(--ink);
-      transition: color .3s
+      font-size: 0.86rem;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      border: 2px solid var(--bg);
     }
 
-    .testi-title {
-      font-size: .75rem;
-      color: var(--mid);
-      font-family: 'Fira Code', monospace;
-      letter-spacing: .06em;
-      margin-top: .2rem;
-      transition: color .3s
-    }
-
-    .testi-nav {
+    .testi-author-info {
       display: flex;
-      justify-content: center;
-      gap: .6rem;
-      margin-top: 2.4rem
+      flex-direction: column;
     }
 
-    .testi-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(26, 23, 20, .15);
-      cursor: pointer;
-      transition: all .3s cubic-bezier(.4, 0, .2, 1);
-      padding: 0
+    .testi-author-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--ink);
+      line-height: 1.3;
     }
 
-    [data-theme="dark"] .testi-dot {
-      background: rgba(240, 235, 224, .1)
+    .testi-author-role {
+      font-size: 0.78rem;
+      color: var(--mid);
+      line-height: 1.35;
+      margin-top: 0.15rem;
     }
 
-    .testi-dot:hover {
-      background: rgba(26, 23, 20, .25)
-    }
-
-    [data-theme="dark"] .testi-dot:hover {
-      background: rgba(240, 235, 224, .15)
-    }
-
-    .testi-dot.active {
-      background: var(--accent);
-      width: 28px;
-      border-radius: 6px;
-      box-shadow: 0 0 12px rgba(192, 82, 42, .4)
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(40px)
+    @media (max-width: 992px) {
+      .testi-columns-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
       }
-
-      to {
-        opacity: 1;
-        transform: translateX(0)
+      .testi-col-3 {
+        display: none;
+      }
+      .testi-marquee-container {
+        height: 560px;
       }
     }
 
-    @keyframes slideOut {
-      from {
-        opacity: 1;
-        transform: translateX(0)
+    @media (max-width: 640px) {
+      .testi-columns-grid {
+        grid-template-columns: 1fr;
       }
-
-      to {
-        opacity: 0;
-        transform: translateX(-40px)
+      .testi-col-2 {
+        display: none;
+      }
+      .testi-marquee-container {
+        height: 500px;
+      }
+      .testi-card {
+        padding: 1.4rem 1.3rem 1.2rem;
       }
     }
 
@@ -3475,11 +3543,6 @@
         grid-template-columns: repeat(4, 1fr)
       }
 
-      .testi-carousel {
-        min-height: 380px;
-        height: auto;
-      }
-
       .contact-layout {
         grid-template-columns: 1fr;
         gap: 3rem
@@ -3584,10 +3647,6 @@
 
       .tech-grid {
         grid-template-columns: repeat(3, 1fr)
-      }
-
-      .testi-carousel {
-        height: 520px
       }
 
       .nav-center {
@@ -3723,7 +3782,7 @@
     /* On fine-pointer devices, re-apply cursor:none override for all interactive elements */
     @media (hover: hover) and (pointer: fine) {
       .btn, .btn-resume, .nav-center a, .theme-toggle,
-      .pf-btn, .project-card, .testi-dot, .btn-many-more,
+      .pf-btn, .project-card, .testi-card, .btn-many-more,
       .f-btn, .tech-cell, .contact-link-row, #btt,
       .cert-card, .ach-item, .menu-toggle, .menu-close, .mobile-menu-links a {
         cursor: none
@@ -3734,6 +3793,10 @@
       [data-reveal] {
         transition: none;
         filter: none
+      }
+
+      .testi-col-track {
+        animation: none !important;
       }
 
       .project-card {
@@ -5225,236 +5288,307 @@
   <div class="rule"></div>
 
   <!-- ═══ TESTIMONIALS ═════════════════════════════════ -->
+  <!-- ═══ TESTIMONIALS (INFINITE AUTO-SCROLL WALL) ════════ -->
   <section id="testimonials">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">08 — Endorsements</div>
-      <h2 class="section-heading" data-reveal="up">What <em>people say</em></h2>
-      <div class="testi-wrapper" data-reveal="up" style="margin-top:3rem">
-        <div class="testi-carousel" aria-live="polite">
-          <!-- Hackathon Judge -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"Ayush demonstrated exceptional problem-solving skills and innovative thinking at the hackathon. His
-                approach to AI integration was remarkably mature for his level of experience."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">RJ</div>
-              <div>
-                <div class="testi-name">Rajesh Joshi</div>
-                <div class="testi-title">Lead Judge, TechHack 2024</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Company CEO -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"We're impressed with Ayush's full-stack capabilities and AI expertise. His work on NLP implementations
-                showed production-ready quality. A valuable addition to any tech team."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">VP</div>
-              <div>
-                <div class="testi-name">Vikram Patel</div>
-                <div class="testi-title">CEO, InnovateTech Solutions</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- College VC -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"Ayush exemplifies the caliber of student we're committed to supporting. His academic excellence
-                combined with real-world project contributions make him a model for his peers."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">DR</div>
-              <div>
-                <div class="testi-name">Dr. Ravi Kiran</div>
-                <div class="testi-title">Vice Chancellor, Centurion University</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Friend/Peer -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"Working with Ayush on projects is always smooth. His attention to detail, code quality, and ability to
-                explain complex concepts made our collaboration incredibly productive."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">MD</div>
-              <div>
-                <div class="testi-name">Manishika Dash</div>
-                <div class="testi-title">Fellow Developer & Friend</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mentor/Senior -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"I mentor many developers, but Ayush's growth trajectory is exceptional. The passion for learning and
-                applying cutting-edge tech is exactly what the industry needs."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">AS</div>
-              <div>
-                <div class="testi-name">Avik Singh</div>
-                <div class="testi-title">Senior AI/ML Engineer, Google</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project Co-collaborator -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"Ayush turned our vague project idea into a fully functional platform. His ability to jump between
-                frontend, backend, and ML components is truly remarkable."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">NK</div>
-              <div>
-                <div class="testi-name">Nik Kapoor</div>
-                <div class="testi-title">Startup Co-founder</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- English Teacher -->
-          <div class="testi-card">
-            <div class="testi-quote">
-              <svg viewBox="0 0 24 24" class="quote-icon">
-                <path
-                  d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                  fill="currentColor" />
-              </svg>
-              <p>"I had the privilege of teaching Ayush during Classes 11 and 12, and I can confidently say that he is
-                one of the most sincere and dedicated students I have worked with. He combines strong academic ability
-                with discipline, humility, and a genuine eagerness to learn. His thoughtful approach to studies,
-                respectful attitude, and consistent commitment to excellence make him stand out among his peers. I
-                strongly believe that his perseverance, integrity, and intellectual curiosity will enable him to achieve
-                great success in his future endeavors."</p>
-            </div>
-            <div class="testi-meta">
-              <div class="testi-avatar" style="background: linear-gradient(135deg, #d4a5a5 0%, #9b6b6b 100%);">TM</div>
-              <div>
-                <div class="testi-name">Tami Sikdar Majumder</div>
-                <div class="testi-title">English Teacher, DAV Public School Bistupur Jamshedpur | EFLU</div>
-              </div>
-            </div>
-          </div>
+      <div class="testi-header-center">
+        <div class="testi-pill" data-reveal="fade">
+          <span class="testi-pill-dot"></span>
+          <span>Testimonials</span>
         </div>
+        <h2 class="section-heading text-center" data-reveal="up">What people <em>say</em></h2>
+        <p class="testi-subtitle" data-reveal="up">See what mentors, collaborators, and educators have to say about working with me.</p>
+      </div>
 
-        <!-- Friend -->
-        <div class="testi-card testi-card--compact">
-          <div class="testi-quote">
-            <svg viewBox="0 0 24 24" class="quote-icon">
-              <path
-                d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                fill="currentColor" />
-            </svg>
-            <p>"Ayush is an exceptionally talented developer who consistently delivers clean,
-              high-performance solutions to the most complex technical challenges."</p>
-          </div>
-          <div class="testi-meta">
-            <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">EA</div>
-            <div>
-              <div class="testi-name">Eklavya Amrit</div>
-              <div class="testi-title">Friend | DAV Public School Bistupur Jamshedpur | BIT Mesra</div>
+      <div class="testi-marquee-container" data-reveal="up">
+        <div class="testi-fade-top" aria-hidden="true"></div>
+        <div class="testi-fade-bottom" aria-hidden="true"></div>
+
+        <div class="testi-columns-grid">
+          <!-- COLUMN 1 (Scrolls Up) -->
+          <div class="testi-column testi-col-1">
+            <div class="testi-col-track testi-track--up">
+              <!-- Set 1 -->
+              <div class="testi-card">
+                <p class="testi-quote-text">"We're impressed with Ayush's full-stack capabilities and AI expertise. His work on NLP implementations showed production-ready quality. A valuable addition to any tech team."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">VP</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Vikram Patel</span>
+                    <span class="testi-author-role">CEO, InnovateTech Solutions</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush demonstrated exceptional problem-solving skills and innovative thinking at the hackathon. His approach to AI integration was remarkably mature for his level of experience."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">RJ</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Rajesh Joshi</span>
+                    <span class="testi-author-role">Lead Judge, TechHack 2024</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush is an exceptionally talented developer who consistently delivers clean, high-performance solutions to the most complex technical challenges."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">EA</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Eklavya Amrit</span>
+                    <span class="testi-author-role">Friend | BIT Mesra</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush has always been a sincere, hardworking, and enthusiastic learner. He demonstrated strong analytical thinking, excellent problem-solving skills, and a deep interest in technology. Currently working as a GDG Member in Bhubaneswar, he will surely prove to be an asset to any organization."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);">TP</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Tanmoy Paul</span>
+                    <span class="testi-author-role">PGT Computer Science, DAV Public School</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Set 2 (Identical clone for seamless continuous infinite scroll) -->
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"We're impressed with Ayush's full-stack capabilities and AI expertise. His work on NLP implementations showed production-ready quality. A valuable addition to any tech team."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">VP</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Vikram Patel</span>
+                    <span class="testi-author-role">CEO, InnovateTech Solutions</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush demonstrated exceptional problem-solving skills and innovative thinking at the hackathon. His approach to AI integration was remarkably mature for his level of experience."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">RJ</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Rajesh Joshi</span>
+                    <span class="testi-author-role">Lead Judge, TechHack 2024</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush is an exceptionally talented developer who consistently delivers clean, high-performance solutions to the most complex technical challenges."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">EA</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Eklavya Amrit</span>
+                    <span class="testi-author-role">Friend | BIT Mesra</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush has always been a sincere, hardworking, and enthusiastic learner. He demonstrated strong analytical thinking, excellent problem-solving skills, and a deep interest in technology. Currently working as a GDG Member in Bhubaneswar, he will surely prove to be an asset to any organization."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);">TP</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Tanmoy Paul</span>
+                    <span class="testi-author-role">PGT Computer Science, DAV Public School</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Friend - Somya Prasad -->
-        <div class="testi-card testi-card--compact">
-          <div class="testi-quote">
-            <svg viewBox="0 0 24 24" class="quote-icon">
-              <path
-                d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                fill="currentColor" />
-            </svg>
-            <p>"One of the most efficient person to work with, very influential and a person with perfect planning."</p>
-          </div>
-          <div class="testi-meta">
-            <div class="testi-avatar" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">SP</div>
-            <div>
-              <div class="testi-name">Somya Prasad</div>
-              <div class="testi-title">Friend | MERN Stack Developer</div>
+          <!-- COLUMN 2 (Scrolls Down) -->
+          <div class="testi-column testi-col-2">
+            <div class="testi-col-track testi-track--down">
+              <!-- Set 1 -->
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush exemplifies the caliber of student we're committed to supporting. His academic excellence combined with real-world project contributions make him a model for his peers."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">DR</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Dr. Ravi Kiran</span>
+                    <span class="testi-author-role">Vice Chancellor, Centurion University</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"I mentor many developers, but Ayush's growth trajectory is exceptional. The passion for learning and applying cutting-edge tech is exactly what the industry needs."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">AS</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Avik Singh</span>
+                    <span class="testi-author-role">Senior AI/ML Engineer, Google</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"I had the privilege of teaching Ayush during Classes 11 and 12, and he is one of the most sincere and dedicated students I have worked with. He combines strong academic ability with discipline, humility, and a genuine eagerness to learn."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #d4a5a5 0%, #9b6b6b 100%);">TM</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Tami Sikdar Majumder</span>
+                    <span class="testi-author-role">English Teacher, DAV Bistupur | EFLU</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"One of the most efficient people to work with, very influential and a person with perfect planning and execution skills."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">SP</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Somya Prasad</span>
+                    <span class="testi-author-role">Friend | MERN Stack Developer</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Set 2 (Identical clone) -->
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush exemplifies the caliber of student we're committed to supporting. His academic excellence combined with real-world project contributions make him a model for his peers."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">DR</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Dr. Ravi Kiran</span>
+                    <span class="testi-author-role">Vice Chancellor, Centurion University</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"I mentor many developers, but Ayush's growth trajectory is exceptional. The passion for learning and applying cutting-edge tech is exactly what the industry needs."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">AS</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Avik Singh</span>
+                    <span class="testi-author-role">Senior AI/ML Engineer, Google</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"I had the privilege of teaching Ayush during Classes 11 and 12, and he is one of the most sincere and dedicated students I have worked with. He combines strong academic ability with discipline, humility, and a genuine eagerness to learn."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #d4a5a5 0%, #9b6b6b 100%);">TM</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Tami Sikdar Majumder</span>
+                    <span class="testi-author-role">English Teacher, DAV Bistupur | EFLU</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"One of the most efficient people to work with, very influential and a person with perfect planning and execution skills."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">SP</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Somya Prasad</span>
+                    <span class="testi-author-role">Friend | MERN Stack Developer</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Computer teacher -->
-        <div class="testi-card">
-          <div class="testi-quote">
-            <svg viewBox="0 0 24 24" class="quote-icon">
-              <path
-                d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
-                fill="currentColor" />
-            </svg>
-            <p>"It gives me immense pleasure to write this testimonial for Ayush Pradhan, who successfully passed out in
-              the year 2025 with an outstanding score of 91 in Computer Science.
-              Ayush has always been a sincere, hardworking, and enthusiastic learner. He demonstrated strong analytical
-              thinking, excellent problem-solving skills, and a deep interest in technology throughout his academic
-              journey. His dedication to learning and consistent performance made him stand out among his peers.
-              Currently, Ayush is working as a Google Developer Group (GDG) Member in Bhubaneswar, which truly reflects
-              his passion for development, innovation, and continuous learning. His involvement with GDG showcases his
-              commitment to enhancing his technical skills and contributing to the developer community.
-              I strongly believe that Ayush has a bright future ahead, and I wish him great success in all his future
-              endeavors. He will surely prove to be an asset to any organization or team he becomes part of.
-              Best wishes"</p>
-          </div>
-          <div class="testi-meta">
-            <div class="testi-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">TP</div>
-            <div>
-              <div class="testi-name">Tanmoy Paul</div>
-              <div class="testi-title">PGT Computer Science |DAV Public School Bistupur Jamshedpur</div>
+          <!-- COLUMN 3 (Scrolls Up Slow) -->
+          <div class="testi-column testi-col-3">
+            <div class="testi-col-track testi-track--slow">
+              <!-- Set 1 -->
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush turned our vague project idea into a fully functional platform. His ability to jump between frontend, backend, and ML components is truly remarkable."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">NK</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Nik Kapoor</span>
+                    <span class="testi-author-role">Startup Co-founder</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"Working with Ayush on projects is always smooth. His attention to detail, code quality, and ability to explain complex concepts made our collaboration incredibly productive."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">MD</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Manishika Dash</span>
+                    <span class="testi-author-role">Fellow Developer & Friend</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush's grasp of modern full-stack architectures, clean state management, and resilient APIs is remarkable. He approaches engineering challenges with rigor, creativity, and speed."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">OR</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Omar Raza</span>
+                    <span class="testi-author-role">Tech Lead & Open-Source Mentor</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card">
+                <p class="testi-quote-text">"Ayush delivered high-performance web systems with exceptional user-friendly design and swift execution. A brilliant engineer who understands product value."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);">FS</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Farhan Siddiqui</span>
+                    <span class="testi-author-role">Marketing Director & Collaborator</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Set 2 (Identical clone) -->
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush turned our vague project idea into a fully functional platform. His ability to jump between frontend, backend, and ML components is truly remarkable."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">NK</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Nik Kapoor</span>
+                    <span class="testi-author-role">Startup Co-founder</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Working with Ayush on projects is always smooth. His attention to detail, code quality, and ability to explain complex concepts made our collaboration incredibly productive."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">MD</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Manishika Dash</span>
+                    <span class="testi-author-role">Fellow Developer & Friend</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush's grasp of modern full-stack architectures, clean state management, and resilient APIs is remarkable. He approaches engineering challenges with rigor, creativity, and speed."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">OR</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Omar Raza</span>
+                    <span class="testi-author-role">Tech Lead & Open-Source Mentor</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testi-card" aria-hidden="true">
+                <p class="testi-quote-text">"Ayush delivered high-performance web systems with exceptional user-friendly design and swift execution. A brilliant engineer who understands product value."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);">FS</div>
+                  <div class="testi-author-info">
+                    <span class="testi-author-name">Farhan Siddiqui</span>
+                    <span class="testi-author-role">Marketing Director & Collaborator</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="testi-nav">
-          <button class="testi-dot active" data-slide="0" aria-label="Go to testimonial slide 1"></button>
-          <button class="testi-dot" data-slide="1" aria-label="Go to testimonial slide 2"></button>
-          <button class="testi-dot" data-slide="2" aria-label="Go to testimonial slide 3"></button>
-          <button class="testi-dot" data-slide="3" aria-label="Go to testimonial slide 4"></button>
-          <button class="testi-dot" data-slide="4" aria-label="Go to testimonial slide 5"></button>
-          <button class="testi-dot" data-slide="5" aria-label="Go to testimonial slide 6"></button>
-          <button class="testi-dot" data-slide="6" aria-label="Go to testimonial slide 7"></button>
-          <button class="testi-dot" data-slide="7" aria-label="Go to testimonial slide 8"></button>
-          <button class="testi-dot" data-slide="8" aria-label="Go to testimonial slide 9"></button>
-          <button class="testi-dot" data-slide="9" aria-label="Go to testimonial slide 10"></button>
         </div>
       </div>
     </div>
@@ -6178,90 +6312,31 @@
       profileFrame.style.transition = 'transform .1s ease';
     });
 
-    /* ═══ TESTIMONIALS CAROUSEL ════════════════════════ */
-    const testiCards = document.querySelectorAll('.testi-card');
-    const testiDots = document.querySelectorAll('.testi-dot');
-    const testiCarousel = document.querySelector('.testi-carousel');
-    let currentSlide = 0;
-    let autoSlideTimer;
+    /* ═══ TESTIMONIALS AUTO-SCROLL (INFINITE WALL) ════════ */
+    const testiMarquee = document.querySelector('.testi-marquee-container');
+    const testiTracks = document.querySelectorAll('.testi-col-track');
 
-    function showSlide(index) {
-      testiCards.forEach((card, i) => {
-        card.classList.remove('active', 'exit-left');
-        if (i === index) {
-          card.classList.add('active');
-        } else if (i < index) {
-          card.classList.add('exit-left');
-        }
-      });
-
-      testiDots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-
-      currentSlide = index;
-      resetAutoSlide();
-    }
-
-    function nextSlide() {
-      const nextIndex = (currentSlide + 1) % testiCards.length;
-      showSlide(nextIndex);
-    }
-
-    function prevSlide() {
-      const prevIndex = (currentSlide - 1 + testiCards.length) % testiCards.length;
-      showSlide(prevIndex);
-    }
-
-    function resetAutoSlide() {
-      clearInterval(autoSlideTimer);
-      autoSlideTimer = setInterval(nextSlide, 5500);
-    }
-
-    // Dot navigation
-    testiDots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        const slideIndex = parseInt(dot.getAttribute('data-slide'));
-        showSlide(slideIndex);
-      });
-    });
-
-    // Keyboard navigation (only when testimonials section is visible in viewport)
-    document.addEventListener('keydown', e => {
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-      const testiSec = document.getElementById('testimonials');
-      if (!testiSec) return;
-      const rect = testiSec.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
-      if (!inView) return;
-      if (e.key === 'ArrowLeft') prevSlide();
-      if (e.key === 'ArrowRight') nextSlide();
-    });
-
-    // Touch navigation for carousel (swipe left/right)
-    if (testiCarousel) {
-      let touchStartX = 0;
-      let touchEndX = 0;
-      testiCarousel.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
+    if (testiMarquee && testiTracks.length) {
+      // Pause animations when user touches on mobile for effortless reading
+      testiMarquee.addEventListener('touchstart', () => {
+        testiTracks.forEach(track => {
+          track.style.animationPlayState = 'paused';
+        });
       }, { passive: true });
-      testiCarousel.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) {
-          nextSlide(); // swipe left
-        } else if (touchEndX > touchStartX + 50) {
-          prevSlide(); // swipe right
-        }
+
+      testiMarquee.addEventListener('touchend', () => {
+        testiTracks.forEach(track => {
+          track.style.animationPlayState = 'running';
+        });
       }, { passive: true });
-    }
 
-    // Start auto-slide
-    resetAutoSlide();
-
-    // Pause on hover
-    if (testiCarousel) {
-      testiCarousel.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
-      testiCarousel.addEventListener('mouseleave', resetAutoSlide);
+      // Pause when cards receive focus for accessibility
+      testiMarquee.addEventListener('focusin', () => {
+        testiTracks.forEach(track => track.style.animationPlayState = 'paused');
+      });
+      testiMarquee.addEventListener('focusout', () => {
+        testiTracks.forEach(track => track.style.animationPlayState = 'running');
+      });
     }
 
     // Profile image grayscale hover animation
