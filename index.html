@@ -36,21 +36,21 @@
     }
 
     [data-theme="dark"] {
-      --bg: #08090e;
-      --bg2: #0f1018;
-      --bg3: #161824;
+      --bg: #0c0c0e;
+      --bg2: #141418;
+      --bg3: #1c1c24;
       --ink: #f0ebe0;
       --ink2: #d6cfc4;
-      --mid: #8a8278;
-      --muted: #736d64;
+      --mid: #8e8880;
+      --muted: #66615a;
       --accent: #e07048;
       --accent2: #f0906a;
       --line: rgba(240, 235, 224, 0.08);
       --line2: rgba(240, 235, 224, 0.04);
-      --nav-bg: rgba(8, 9, 14, 0.92);
-      --tech-bg: #0f1018;
-      --tech-cell: #161824;
-      --tech-hover: #1e2030;
+      --nav-bg: rgba(12, 12, 14, 0.92);
+      --tech-bg: #141418;
+      --tech-cell: #1c1c24;
+      --tech-hover: #262632;
     }
 
     /* ═══ CUSTOM SCROLLBAR ═════════════════════ */
@@ -383,51 +383,7 @@
       transform: translateX(22px)
     }
 
-    /* ═══ RESUME BUTTON ════════════════════════ */
-    .btn-resume {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      padding: .82rem 1.7rem;
-      border-radius: 4px;
-      font-size: .84rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all .25s;
-      border: 1.5px solid transparent;
-      letter-spacing: .02em;
-      background: var(--accent);
-      color: var(--bg);
-      border-color: var(--accent);
-      position: relative;
-      overflow: hidden;
-      animation: resumeButtonPulse 2.4s ease-in-out infinite;
-    }
-
-    .btn-resume:hover {
-      background: var(--accent2);
-      border-color: var(--accent2);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(240, 144, 106, .3);
-      animation: none
-    }
-
-    #resume-btn .rb-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      transition: transform .3s;
-      animation: iconRotateSlow 8s linear infinite;
-    }
-
-    #resume-btn:hover .rb-icon {
-      transform: translateY(-2px) rotate(-5deg);
-      animation: none
-    }
+    /* ═══ GLOBAL ACTIONS ═══════════════════════ */
 
     #resume-btn .rb-label {
       white-space: nowrap
@@ -1396,38 +1352,6 @@
       border-width: 0 2px 2px 0
     }
 
-    .hero-float-tag {
-      position: absolute;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      padding: .55rem .9rem;
-      font-family: 'Fira Code', monospace;
-      font-size: .62rem;
-      color: var(--mid);
-      letter-spacing: .08em;
-      opacity: 0;
-      animation: heroTagIn .6s ease both, floatTag 6s ease-in-out infinite;
-      transition: background .4s, border-color .4s
-    }
-
-    .hero-float-tag:nth-child(1) {
-      top: 16%;
-      right: 18%;
-      animation-delay: .9s, 0s
-    }
-
-    .hero-float-tag:nth-child(2) {
-      bottom: 22%;
-      left: 7%;
-      animation-delay: 1.1s, -2s
-    }
-
-    .hero-float-tag:nth-child(3) {
-      top: 58%;
-      right: 9%;
-      animation-delay: 1.3s, -4s
-    }
-
     .scroll-hint {
       position: absolute;
       bottom: 2rem;
@@ -1529,6 +1453,55 @@
     .tag:hover {
       border-color: var(--accent);
       color: var(--accent)
+    }
+
+    /* ═══ KINETIC MARQUEE STRIP ══════════════════ */
+    .marquee-strip {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 1.15rem 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      display: flex;
+      user-select: none;
+      z-index: 1;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marqueeInfinite 28s linear infinite;
+      flex-shrink: 0;
+      will-change: transform;
+    }
+
+    .marquee-strip:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: .85rem;
+      font-family: 'Fira Code', monospace;
+      font-size: .74rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+
+    .marquee-item .accent-dot {
+      color: var(--accent);
+      font-size: .65rem;
+    }
+
+    @keyframes marqueeInfinite {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* ═══ TECH ══════════════════════════════════ */
@@ -1867,64 +1840,67 @@
     .proj-cat-badge {
       display: inline-block;
       font-family: 'Fira Code', monospace;
-      font-size: .55rem;
+      font-size: .56rem;
       letter-spacing: .08em;
       text-transform: uppercase;
-      padding: .15rem .5rem;
-      border-radius: 2px;
-      margin-bottom: .4rem
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      margin-bottom: .4rem;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .cat-web {
-      background: rgba(79, 140, 247, .12);
-      color: #4f8cf7;
-      border: 1px solid rgba(79, 140, 247, .2)
+      background: rgba(192, 82, 42, .08);
+      color: var(--accent);
+      border: 1px solid rgba(192, 82, 42, .2)
     }
 
     .cat-ai {
-      background: rgba(167, 139, 250, .12);
-      color: #a78bfa;
-      border: 1px solid rgba(167, 139, 250, .2)
+      background: rgba(142, 100, 240, .1);
+      color: #9d7df0;
+      border: 1px solid rgba(142, 100, 240, .22)
     }
 
     .cat-cv {
-      background: rgba(52, 211, 153, .12);
-      color: #34d399;
-      border: 1px solid rgba(52, 211, 153, .2)
+      background: rgba(16, 185, 129, .09);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, .2)
     }
 
     .cat-python {
-      background: rgba(253, 186, 116, .12);
-      color: #fb923c;
-      border: 1px solid rgba(253, 186, 116, .2)
+      background: rgba(245, 158, 11, .09);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, .2)
     }
 
     .cat-cyber {
-      background: rgba(34, 197, 94, .12);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, .2)
+      background: rgba(16, 185, 129, .09);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, .2)
     }
 
     .cat-java {
-      background: rgba(244, 116, 33, .12);
-      color: #f47421;
-      border: 1px solid rgba(244, 116, 33, .2)
+      background: rgba(234, 88, 12, .09);
+      color: #ea580c;
+      border: 1px solid rgba(234, 88, 12, .2)
     }
 
     .cat-fullstack {
-      background: rgba(236, 72, 153, .12);
-      color: #ec4899;
-      border: 1px solid rgba(236, 72, 153, .2)
+      background: rgba(192, 82, 42, .08);
+      color: var(--accent);
+      border: 1px solid rgba(192, 82, 42, .2)
     }
 
     .cat-networking {
-      background: rgba(6, 182, 212, .12);
+      background: rgba(6, 182, 212, .09);
       color: #06b6d4;
       border: 1px solid rgba(6, 182, 212, .2)
     }
 
     .cat-oss {
-      background: rgba(234, 179, 8, .12);
+      background: rgba(234, 179, 8, .09);
       color: #eab308;
       border: 1px solid rgba(234, 179, 8, .2)
     }
@@ -3356,7 +3332,20 @@
       }
 
       .hero-right {
-        display: none
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2.5rem 1.5rem 4rem;
+        min-height: 440px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-img-wrap {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        position: relative;
       }
 
       .hero-left {
@@ -3372,7 +3361,11 @@
       }
 
       .nav-center {
-        gap: 1.3rem
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex !important;
       }
 
       .about-inner {
@@ -3394,13 +3387,13 @@
       }
 
       .hero-metric {
-        left: 6%;
-        top: 8%
+        left: 2%;
+        top: 4%
       }
 
       .profile-tag-stack {
-        right: 5%;
-        top: 10%
+        right: 2%;
+        top: 6%
       }
 
       .tech-grid {
@@ -3408,7 +3401,8 @@
       }
 
       .testi-carousel {
-        height: 480px
+        min-height: 380px;
+        height: auto;
       }
 
       .contact-layout {
@@ -3833,72 +3827,11 @@
       animation: certShimmer 3s ease-in-out 1
     }
 
-    /* ═══ EXPERIENCE ════════════════════════════ */
-    #experience {
-      padding: 7rem 0
-    }
-
-    .exp-row {
-      display: grid;
-      grid-template-columns: 160px 1fr 160px;
-      gap: 2rem;
-      align-items: start;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--line);
-      transition: border-color .4s, background .3s, box-shadow .4s, transform .4s
-    }
-
-    .exp-row:hover {
-      transform: translateY(-4px);
-      background: var(--bg2);
-      padding-left: .8rem;
-      border-bottom-color: var(--accent);
-      box-shadow: 0 8px 24px rgba(192, 82, 42, .12)
-    }
-
-    .exp-date {
-      font-family: 'Fira Code', monospace;
-      font-size: .67rem;
-      color: var(--muted);
-      letter-spacing: .08em;
-      padding-top: .3rem
-    }
-
-    .exp-company {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      letter-spacing: -.02em;
-      margin-bottom: .3rem;
-      transition: color .3s
-    }
-
-    .exp-row:hover .exp-company {
-      color: var(--accent)
-    }
-
-    .exp-role {
-      font-size: .84rem;
-      color: var(--mid);
-      font-weight: 500
-    }
-
-    .exp-badge {
-      text-align: right;
-      font-family: 'Fira Code', monospace;
-      font-size: .58rem;
-      color: var(--accent);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding-top: .3rem
-    }
-
     @media(max-width:768px) {
       .cert-grid {
         grid-template-columns: 1fr
       }
     }
-    
   </style>
 </head>
 
@@ -4042,7 +3975,7 @@
           <div class="hero-float-tag">Computer Vision</div>
           <div class="hero-float-tag">Full Stack Dev</div>
         </div>
-        <div class="hero-metric hero-metric-pride"><strong>World's #1</strong><span>Programmer</span></div>
+        <div class="hero-metric hero-metric-pride"><strong>SIH '25</strong><span>Finalist</span></div>
         <div class="profile-frame">
           <div class="profile-corner tl"></div>
           <div class="profile-corner tr"></div>
@@ -4065,7 +3998,7 @@
       <div class="about-inner">
         <div class="about-sidebar">
           <div data-reveal="up">
-            <div class="stat-big" data-count="9">0<span>+</span></div>
+            <div class="stat-big" data-count="20">0<span>+</span></div>
             <div class="stat-desc">Projects shipped</div>
           </div>
           <div data-reveal="up" style="transition-delay:.1s">
@@ -4073,7 +4006,7 @@
             <div class="stat-desc">Hackathon wins</div>
           </div>
           <div data-reveal="up" style="transition-delay:.2s">
-            <div class="stat-big" data-count="3">0<span>+</span></div>
+            <div class="stat-big" data-count="8">0<span>+</span></div>
             <div class="stat-desc">AI systems built</div>
           </div>
           <div data-reveal="up" style="transition-delay:.3s">
@@ -4086,12 +4019,11 @@
           <h2 class="section-heading" data-reveal="up" style="margin-bottom:1.8rem">Building the<br><em>future with
               code.</em></h2>
           <p class="about-body" data-reveal="up" style="transition-delay:.15s">I'm <strong>Ayush Pradhan</strong>, a
-            passionate Full Stack Developer and Intelligent Systems Developer currently pursuing <strong>B.Tech in Computer Science
-              Engineering at Centurion University, Bhubaneswar</strong>.<br><br>My interests lie in <strong>Artificial Super Intelligence, Computer
-              Vision, and Full Stack Web Development</strong>, where I combine creativity, design, and logic to build
-            innovative real-world solutions. Skilled in Python, Java, and C — I enjoy developing AI-integrated
-            applications and dynamic web systems.<br><br>I believe in learning through building, experimenting, and
-            solving real-world problems through technology.</p>
+            passionate Full Stack Developer and Intelligent Systems Engineer currently pursuing <strong>B.Tech in Computer Science
+              Engineering at Centurion University, Bhubaneswar</strong>.<br><br>My focus centers on <strong>Agentic AI Workflows, Computer
+              Vision, and Scalable Full Stack Web Applications</strong>, where I blend high-craft UI design with robust systems engineering to create
+            production-ready solutions. Skilled in Python, TypeScript, Java, and C — I build high-throughput applications, computer vision pipelines, and intelligent tools.<br><br>I believe in learning through relentless shipping, architectural discipline, and
+            solving complex real-world challenges through technology.</p>
           <div class="about-tags" data-reveal="up" style="transition-delay:.3s">
             <span class="tag">Python</span><span class="tag">Java</span><span class="tag">Computer Vision</span><span
               class="tag">AI / ML</span><span class="tag">Full Stack</span><span class="tag">OpenCV</span><span
@@ -4102,6 +4034,35 @@
     </div>
   </section>
   <div class="rule"></div>
+
+  <!-- ═══ KINETIC TECH MARQUEE ═══════════════════════════ -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-item">Python <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">TypeScript <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Computer Vision <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Deep Learning <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">OpenCV <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Agentic AI <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">React &amp; Next.js <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Flask &amp; FastAPI <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Distributed Systems <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Web Security <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Java &amp; C <span class="accent-dot">✦</span></div>
+      <!-- Duplicate set for seamless continuous loop -->
+      <div class="marquee-item">Python <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">TypeScript <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Computer Vision <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Deep Learning <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">OpenCV <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Agentic AI <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">React &amp; Next.js <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Flask &amp; FastAPI <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Distributed Systems <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Web Security <span class="accent-dot">✦</span></div>
+      <div class="marquee-item">Java &amp; C <span class="accent-dot">✦</span></div>
+    </div>
+  </div>
 
   <!-- ═══ TECH STACK ════════════════════════════════════ -->
   <section id="tech">
@@ -4969,6 +4930,7 @@
         </button>
       </div>
     </div>
+  </section>
   <div class="rule"></div>
 
   <!-- ═══ EDUCATION ═════════════════════════════════════ -->
@@ -5136,7 +5098,7 @@
   <!-- ═══ TESTIMONIALS ═════════════════════════════════ -->
   <section id="testimonials">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">08 — Recognition</div>
+      <div class="eyebrow" data-reveal="fade">08 — Endorsements</div>
       <h2 class="section-heading" data-reveal="up">What <em>people say</em></h2>
       <div class="testi-wrapper" data-reveal="up" style="margin-top:3rem">
         <div class="testi-carousel" aria-live="polite">
@@ -5293,7 +5255,7 @@
                 d="M3 21c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8zm14 0c3 0 7-1 7-8V5c0-1.25-4.744-5-7-5 0 5.824 2 9 2 9-2.158-2-5-2-5-5v8c0 5 5.276 8 7 8z"
                 fill="currentColor" />
             </svg>
-            <p>"Met many code rats but Ayush(my schoolmate) is an exceptional coder who consistently delivers clean,
+            <p>"Ayush is an exceptionally talented developer who consistently delivers clean,
               high-performance solutions to the most complex technical challenges."</p>
           </div>
           <div class="testi-meta">
@@ -5431,42 +5393,50 @@
   <a href="#" id="btt">↑</a>
 
   <script>
-    /* ═══ LOADER ANIMATION ══════════════════════════════ */
+    /* ═══ LOADER ANIMATION (OPTIMIZED & SESSION-AWARE) ════════ */
     (function () {
+      const screen = document.getElementById('loader-screen');
+      if (!screen) return;
       const cmdEl = document.getElementById('loader-cmd');
       const pctEl = document.getElementById('loader-pct');
       const nameEl = document.getElementById('loader-name');
-      const screen = document.getElementById('loader-screen');
-      const phrase = 'compiling portfolio...';
-      let ci = 0;
+      const phrase = 'initializing portfolio...';
+      const hasVisited = sessionStorage.getItem('visited_ayush_pf');
 
-      // Type the command
-      function typeCmd() {
-        if (ci <= phrase.length) {
-          cmdEl.textContent = phrase.slice(0, ci);
-          ci++;
-          setTimeout(typeCmd, 45);
-        }
-      }
-      setTimeout(typeCmd, 400);
-
-      // Animate percentage
-      let pct = 0;
-      const pctTimer = setInterval(() => {
-        pct += Math.floor(Math.random() * 4) + 1;
-        if (pct > 100) pct = 100;
-        pctEl.textContent = pct + '%';
-        if (pct >= 100) clearInterval(pctTimer);
-      }, 35);
-
-      // Reveal name after progress, then open curtains
-      setTimeout(() => nameEl.classList.add('ln-reveal'), 1800);
-      setTimeout(() => {
+      if (hasVisited) {
+        // Instant graceful fade for returning visits in same session
         screen.classList.add('loader-done');
         document.body.classList.remove('is-loading');
-      }, 2900);
-      // Remove loader DOM after transition
-      setTimeout(() => screen.remove(), 3800);
+        setTimeout(() => screen.remove(), 400);
+        return;
+      }
+
+      sessionStorage.setItem('visited_ayush_pf', '1');
+      let ci = 0;
+      function typeCmd() {
+        if (ci <= phrase.length) {
+          if (cmdEl) cmdEl.textContent = phrase.slice(0, ci);
+          ci += 2;
+          setTimeout(typeCmd, 20);
+        }
+      }
+      typeCmd();
+
+      let pct = 0;
+      const pctTimer = setInterval(() => {
+        pct += Math.floor(Math.random() * 15) + 10;
+        if (pct > 100) pct = 100;
+        if (pctEl) pctEl.textContent = pct + '%';
+        if (pct >= 100) {
+          clearInterval(pctTimer);
+          if (nameEl) nameEl.classList.add('ln-reveal');
+          setTimeout(() => {
+            screen.classList.add('loader-done');
+            document.body.classList.remove('is-loading');
+            setTimeout(() => screen.remove(), 450);
+          }, 200);
+        }
+      }, 30);
     })();
 
     /* ═══ STARFIELD ═════════════════════════════════════ */
@@ -5707,13 +5677,11 @@
     /* ═══ ANIMATED ROLE TYPEWRITER WITH GLITCH ════════ */
     const roles = [
       'Full Stack Developer',
-      'AI Engineer',
-      'Problem Solver',
-      'Coder',
-      'Vision Builder',
+      'AI & ML Engineer',
+      'Computer Vision Dev',
+      'Systems Builder',
       'Open Source Contributor',
-      'Tech Enthusiast',
-      'Genius'
+      'Problem Solver'
     ];
     const roleEl = document.getElementById('role-text');
     let ri = 0, ci = 0, deleting = false, roleTimer, isGlitching = false;
@@ -6105,9 +6073,14 @@
       });
     });
 
-    // Keyboard navigation (respect text inputs/textareas)
+    // Keyboard navigation (only when testimonials section is visible in viewport)
     document.addEventListener('keydown', e => {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      const testiSec = document.getElementById('testimonials');
+      if (!testiSec) return;
+      const rect = testiSec.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
       if (e.key === 'ArrowLeft') prevSlide();
       if (e.key === 'ArrowRight') nextSlide();
     });
@@ -6182,6 +6155,81 @@
         });
       });
     })();
+
+    /* ═══ GSAP & ADVANCED MOTION CHOREOGRAPHY ═══════════ */
+    function initGSAPMotion() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Parallax depth on hero profile & ambient elements
+      gsap.to('.hero-img-wrap', {
+        y: 40,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2
+        }
+      });
+
+      gsap.to('.hero-left', {
+        y: -25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5
+        }
+      });
+
+      // Subtle kinetic reveal on section eyebrows and headings
+      gsap.utils.toArray('.eyebrow').forEach(eyebrow => {
+        gsap.from(eyebrow, {
+          opacity: 0,
+          y: 16,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: eyebrow,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
+      // Staggered reveal for project rows with spring physics
+      gsap.utils.toArray('.project-row').forEach((row, i) => {
+        gsap.fromTo(row, 
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            scrollTrigger: {
+              trigger: row,
+              start: 'top 92%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+    }
+
+    window.addEventListener('load', () => {
+      // Dynamic load of GSAP for zero-block startup
+      const script1 = document.createElement('script');
+      script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+      script1.onload = () => {
+        const script2 = document.createElement('script');
+        script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+        script2.onload = initGSAPMotion;
+        document.body.appendChild(script2);
+      };
+      document.body.appendChild(script1);
+    });
 
   </script>
 </body>
