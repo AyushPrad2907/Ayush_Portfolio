@@ -1805,6 +1805,326 @@
       transform: scaleX(1)
     }
 
+    /* ═══ FEATURED PRODUCTS ═════════════════════ */
+    #featured-products {
+      padding: 7rem 0 3rem;
+    }
+
+    .featured-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .featured-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--bg2);
+      transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s cubic-bezier(.22,1,.36,1), border-color .35s;
+      position: relative;
+      cursor: pointer;
+    }
+
+    [data-theme="dark"] .featured-card {
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
+        var(--bg2);
+      border-color: rgba(240,235,224,.08);
+    }
+
+    .featured-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(224,112,72,.3);
+      box-shadow:
+        0 20px 48px rgba(26,23,20,.08),
+        0 14px 36px rgba(192,82,42,.12);
+    }
+
+    [data-theme="dark"] .featured-card:hover {
+      border-color: rgba(224,112,72,.35);
+      box-shadow:
+        0 26px 56px rgba(0,0,0,.55),
+        0 16px 40px rgba(224,112,72,.16);
+    }
+
+    .featured-visual {
+      position: relative;
+      min-height: 320px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .featured-visual-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform .6s cubic-bezier(.22,1,.36,1);
+    }
+
+    .featured-card:hover .featured-visual-bg {
+      transform: scale(1.04);
+    }
+
+    .fv-implexcart {
+      background:
+        linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+
+    .fv-creatorloom {
+      background:
+        linear-gradient(135deg, #ff6b6b 0%, #ee5a24 40%, #f9ca24 100%);
+    }
+
+    .fv-userdirectory {
+      background:
+        linear-gradient(135deg, #00b894 0%, #00cec9 50%, #0984e3 100%);
+    }
+
+    .featured-visual-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .featured-visual-icon {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: .8rem;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.2));
+    }
+
+    .featured-visual-label {
+      font-family: 'Fira Code', monospace;
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.9);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: .35rem .8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+
+    .featured-info {
+      padding: 2.5rem 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .3rem .75rem;
+      border-radius: 999px;
+      font-family: 'Fira Code', monospace;
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.3);
+      color: #16a34a;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    [data-theme="dark"] .featured-live-badge {
+      background: rgba(34,197,94,.08);
+      border-color: rgba(34,197,94,.25);
+      color: #4ade80;
+    }
+
+    .featured-live-dot {
+      width: 6px;
+      height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: dotPulse 2.4s ease-in-out infinite;
+    }
+
+    [data-theme="dark"] .featured-live-dot {
+      background: #4ade80;
+    }
+
+    .featured-context {
+      font-family: 'Fira Code', monospace;
+      font-size: .6rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .5rem;
+    }
+
+    .featured-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin-bottom: .6rem;
+      transition: color .25s;
+    }
+
+    .featured-card:hover .featured-title {
+      color: var(--accent);
+    }
+
+    .featured-desc {
+      font-size: .88rem;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .featured-metrics {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.3rem;
+      padding: .8rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .featured-metric {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .featured-metric-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .featured-metric-label {
+      font-family: 'Fira Code', monospace;
+      font-size: .55rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .featured-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: .8rem;
+      align-items: center;
+    }
+
+    .featured-btn-live {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem 1.3rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Fira Code', monospace;
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.22,1,.36,1);
+      position: relative;
+      z-index: 3;
+    }
+
+    .featured-btn-live:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(224,112,72,.35);
+    }
+
+    .featured-btn-code {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .55rem 1.1rem;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--mid);
+      font-family: 'Fira Code', monospace;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: all .25s;
+      position: relative;
+      z-index: 3;
+    }
+
+    .featured-btn-code:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    /* Featured section divider */
+    .featured-to-projects {
+      text-align: center;
+      padding: 2.5rem 0 0.5rem;
+    }
+
+    .featured-to-projects-line {
+      font-family: 'Fira Code', monospace;
+      font-size: .68rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      opacity: .85;
+    }
+
+    /* Responsive for Featured Cards */
+    @media (max-width: 768px) {
+      .featured-card {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-visual {
+        min-height: 200px;
+      }
+
+      .featured-info {
+        padding: 1.8rem 1.5rem 1.5rem;
+      }
+
+      .featured-title {
+        font-size: 1.3rem;
+      }
+
+      .featured-metrics {
+        gap: 1.2rem;
+      }
+
+      .featured-metric-value {
+        font-size: 1.1rem;
+      }
+    }
+
     /* ═══ PROJECTS ══════════════════════════════ */
     #projects {
       padding: 7rem 0
@@ -4023,7 +4343,7 @@
     <ul class="nav-center">
       <li><a href="#about">About</a></li>
       <li><a href="#tech">Stack</a></li>
-      <li><a href="#projects">Work</a></li>
+      <li><a href="#featured-products">Work</a></li>
       <li><a href="#achievements">Awards</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#education">Education</a></li>
@@ -4055,7 +4375,7 @@
       <ul class="mobile-menu-links">
         <li><a href="#about">About</a></li>
         <li><a href="#tech">Stack</a></li>
-        <li><a href="#projects">Work</a></li>
+        <li><a href="#featured-products">Work</a></li>
         <li><a href="#achievements">Awards</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
@@ -4094,7 +4414,7 @@
       </div>
 
       <div class="hero-btns">
-        <a href="#projects" class="btn btn-fill">View Projects ↗</a>
+        <a href="#featured-products" class="btn btn-fill">View Projects ↗</a>
         <a href="#contact" class="btn btn-outline">Let's Connect</a>
         <a href="https://drive.google.com/file/d/194uomt1HOQzn8SAIyAtqcdPs00Oa8kR4/view?usp=sharing" id="resume-btn"
           class="btn btn-resume" title="Download Resume" target="_blank">
@@ -4753,15 +5073,141 @@
   </section>
   <div class="rule"></div>
 
+  <!-- ═══ FEATURED PRODUCTS ═══════════════════════════════ -->
+  <section id="featured-products">
+    <div class="container">
+      <div class="featured-header" data-reveal="up">
+        <div class="eyebrow">04 — Products in Production</div>
+        <h2 class="section-heading">Live <em>Products</em></h2>
+      </div>
+
+      <div class="featured-grid">
+
+        <!-- Featured 1: Implex Cart International -->
+        <div class="featured-card" data-reveal="up" onclick="window.open('https://implexcart.vercel.app/', '_blank')">
+          <div class="featured-visual">
+            <div class="featured-visual-bg fv-implexcart"></div>
+            <div class="featured-visual-content">
+              <span class="featured-visual-icon">🛒</span>
+              <span class="featured-visual-label">Implex Cart International</span>
+            </div>
+          </div>
+          <div class="featured-info">
+            <span class="featured-live-badge"><span class="featured-live-dot"></span> Live Product</span>
+            <div class="featured-context">Internship → PPO · Full-Stack E-Commerce</div>
+            <div class="featured-title">Implex Cart International</div>
+            <div class="featured-desc">Full-stack e-commerce platform built during internship — featuring buyer storefronts, seller dashboards, admin panels, and integrated payment portal. Internship converted to a Pre-Placement Offer.</div>
+            <div class="featured-metrics">
+              <div class="featured-metric">
+                <span class="featured-metric-value">4</span>
+                <span class="featured-metric-label">Portals Built</span>
+              </div>
+              <div class="featured-metric">
+                <span class="featured-metric-value">PPO</span>
+                <span class="featured-metric-label">Earned</span>
+              </div>
+              <div class="featured-metric">
+                <span class="featured-metric-value">End-to-End</span>
+                <span class="featured-metric-label">Ownership</span>
+              </div>
+            </div>
+            <div class="featured-chips">
+              <span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">React</span><span class="chip">MongoDB</span><span class="chip">Supabase</span><span class="chip">Tailwind</span>
+            </div>
+            <div class="featured-actions">
+              <a href="https://implexcart.vercel.app/" target="_blank" class="featured-btn-live" onclick="event.stopPropagation()">Visit Live ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured 2: The Creator Loom -->
+        <div class="featured-card" data-reveal="up" onclick="window.open('https://thecreatorloom.vercel.app/', '_blank')">
+          <div class="featured-visual">
+            <div class="featured-visual-bg fv-creatorloom"></div>
+            <div class="featured-visual-content">
+              <span class="featured-visual-icon">🎨</span>
+              <span class="featured-visual-label">The Creator Loom</span>
+            </div>
+          </div>
+          <div class="featured-info">
+            <span class="featured-live-badge"><span class="featured-live-dot"></span> Live · Actively Scaling</span>
+            <div class="featured-context">Current Role · Creative & Branding Agency</div>
+            <div class="featured-title">The Creator Loom</div>
+            <div class="featured-desc">Creative and social media agency platform helping brands grow through storytelling, strategy, and design — serving 15+ client companies across India with branding, content creation, and digital campaigns.</div>
+            <div class="featured-metrics">
+              <div class="featured-metric">
+                <span class="featured-metric-value">15+</span>
+                <span class="featured-metric-label">Clients Onboarded</span>
+              </div>
+              <div class="featured-metric">
+                <span class="featured-metric-value">1 Month</span>
+                <span class="featured-metric-label">Since Launch</span>
+              </div>
+              <div class="featured-metric">
+                <span class="featured-metric-value">Pan-India</span>
+                <span class="featured-metric-label">Reach</span>
+              </div>
+            </div>
+            <div class="featured-chips">
+              <span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">React</span><span class="chip">Supabase</span><span class="chip">Tailwind</span><span class="chip">Vercel</span>
+            </div>
+            <div class="featured-actions">
+              <a href="https://thecreatorloom.vercel.app/" target="_blank" class="featured-btn-live" onclick="event.stopPropagation()">Visit Live ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured 3: User Directory -->
+        <div class="featured-card" data-reveal="up" onclick="window.open('https://user-directory-henna.vercel.app/', '_blank')">
+          <div class="featured-visual">
+            <div class="featured-visual-bg fv-userdirectory"></div>
+            <div class="featured-visual-content">
+              <span class="featured-visual-icon">👥</span>
+              <span class="featured-visual-label">User Directory</span>
+            </div>
+          </div>
+          <div class="featured-info">
+            <span class="featured-live-badge"><span class="featured-live-dot"></span> Live Demo</span>
+            <div class="featured-context">Startup Challenge · UI Excellence</div>
+            <div class="featured-title">User Directory</div>
+            <div class="featured-desc">High-fidelity user directory built as a startup assignment challenge — delivered with a polished, production-grade UI focused on clarity, performance, and exceptional user experience.</div>
+            <div class="featured-metrics">
+              <div class="featured-metric">
+                <span class="featured-metric-value">Pixel-Perfect</span>
+                <span class="featured-metric-label">UI Quality</span>
+              </div>
+              <div class="featured-metric">
+                <span class="featured-metric-value">API-Driven</span>
+                <span class="featured-metric-label">Architecture</span>
+              </div>
+            </div>
+            <div class="featured-chips">
+              <span class="chip">React</span><span class="chip">API Integration</span><span class="chip">UI/UX</span><span class="chip">Vercel</span>
+            </div>
+            <div class="featured-actions">
+              <a href="https://user-directory-henna.vercel.app/" target="_blank" class="featured-btn-live" onclick="event.stopPropagation()">Visit Live ↗</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="featured-to-projects" data-reveal="fade">
+        <span class="featured-to-projects-line">— and 19 more projects below —</span>
+      </div>
+    </div>
+  </section>
+  <div class="rule"></div>
+
   <!-- ═══ PROJECTS ══════════════════════════════════════ -->
   <section id="projects">
     <div class="container">
       <div class="projects-header" data-reveal="up">
         <div>
-          <div class="eyebrow">04 — Selected Work</div>
+          <div class="eyebrow">05 — More Projects</div>
           <h2 class="section-heading">Projects I've <em>built</em></h2>
         </div>
-          <div class="projects-count">20</div>
+          <div class="projects-count">19</div>
       </div>
 
       <!-- Filter Tabs -->
@@ -4912,22 +5358,8 @@
             title="View Repository">↗</a>
         </div>
 
-        <div class="project-card" data-reveal="up" data-cat="web">
-          <div class="project-num">10</div>
-          <div class="project-content">
-            <span class="proj-cat-badge cat-web">Web · API Integration</span>
-            <span class="project-emoji-big">👥</span>
-            <div class="project-name">User Directory</div>
-            <div class="project-desc">Built as a startup assignment with API integration, featuring a polished,
-              high-quality UI focused on clarity and user experience.</div>
-            <div class="project-chips"><span class="chip">React</span><span class="chip">API Integration</span><span
-                class="chip">UI/UX</span><span class="chip">Startup Assignment</span></div>
-          </div>
-          <a href="https://user-directory-henna.vercel.app/" target="_blank" class="project-arrow" title="View Live Site">↗</a>
-        </div>
-
         <div class="project-card" data-reveal="up" data-cat="cyber python web">
-          <div class="project-num">11</div>
+          <div class="project-num">10</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-cyber">Cyber Security · Python</span>
             <span class="project-emoji-big">🛡️</span>
@@ -4939,7 +5371,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="java">
-          <div class="project-num">12</div>
+          <div class="project-num">11</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-java">Java · CLI</span>
             <span class="project-emoji-big">🧾</span>
@@ -4951,7 +5383,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="ai cv python">
-          <div class="project-num">13</div>
+          <div class="project-num">12</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · Computer Vision</span>
             <span class="project-emoji-big">🚨</span>
@@ -4963,7 +5395,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="ai python">
-          <div class="project-num">14</div>
+          <div class="project-num">13</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-ai">AI · Satellite Data</span>
             <span class="project-emoji-big">🔥</span>
@@ -4975,7 +5407,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="web fullstack">
-          <div class="project-num">15</div>
+          <div class="project-num">14</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-fullstack">Full-Stack · EdTech</span>
             <span class="project-emoji-big">📚</span>
@@ -4987,7 +5419,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="web fullstack">
-          <div class="project-num">16</div>
+          <div class="project-num">15</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-fullstack">Full-Stack · Enterprise</span>
             <span class="project-emoji-big">🏢</span>
@@ -4999,7 +5431,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="web">
-          <div class="project-num">17</div>
+          <div class="project-num">16</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-web">Web · Real-Time</span>
             <span class="project-emoji-big">📰</span>
@@ -5011,7 +5443,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="web cyber">
-          <div class="project-num">18</div>
+          <div class="project-num">17</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-cyber">Security · Creative UI</span>
             <span class="project-emoji-big">🔐</span>
@@ -5023,7 +5455,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="python networking">
-          <div class="project-num">19</div>
+          <div class="project-num">18</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-networking">Networking · Python</span>
             <span class="project-emoji-big">💬</span>
@@ -5035,7 +5467,7 @@
         </div>
 
         <div class="project-card" data-reveal="up" data-cat="web oss">
-          <div class="project-num">20</div>
+          <div class="project-num">19</div>
           <div class="project-content">
             <span class="proj-cat-badge cat-oss">Open Source · CSS</span>
             <span class="project-emoji-big">✨</span>
@@ -5054,7 +5486,7 @@
   <!-- ═══ ACHIEVEMENTS ══════════════════════════════════ -->
   <section id="achievements">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">05 — Recognition</div>
+      <div class="eyebrow" data-reveal="fade">06 — Recognition</div>
       <h2 class="section-heading" data-reveal="up">Awards &amp; <em>Milestones</em></h2>
       <div class="ach-grid">
         <div class="ach-item" data-reveal="up"><span class="ach-mark">🏆</span>
@@ -5128,7 +5560,7 @@
   <!-- ═══ EDUCATION ═════════════════════════════════════ -->
   <section id="education">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">06 — Academic Path</div>
+      <div class="eyebrow" data-reveal="fade">07 — Academic Path</div>
       <h2 class="section-heading" data-reveal="up">Education &amp; <em>Learning</em></h2>
       <div style="margin-top:3rem">
         <div class="edu-row" data-reveal="up" style="transition-delay:.1s">
@@ -5163,7 +5595,7 @@
   <!-- ═══ CERTIFICATIONS ═══════════════════════════════ -->
   <section id="certifications">
     <div class="container">
-      <div class="eyebrow" data-reveal="fade">07 — Credentials</div>
+      <div class="eyebrow" data-reveal="fade">08 — Credentials</div>
       <h2 class="section-heading" data-reveal="up">Certifications &amp; <em>Badges</em></h2>
       <div class="cert-grid">
 
@@ -6068,7 +6500,7 @@
         if (!countEl || countEl.dataset.animated) return;
         countEl.dataset.animated = 'true';
         let current = 0;
-        const target = 20;
+        const target = 19;
         const timer = setInterval(() => {
           current = Math.min(current + 1, target);
           countEl.textContent = String(current).padStart(2, '0');
